@@ -36,7 +36,7 @@ def create_app(settings: Settings | None = None):
             raise RuntimeError('Set AAGAAH_DATABASE_URL or explicitly enable AAGAAH_DEMO_MEMORY=true')
         app.state.cache=redis.Redis.from_url(settings.redis_url,decode_responses=True,socket_connect_timeout=1,socket_timeout=1) if settings.redis_url else None
         with app.state.repo.transaction() as repo:
-            if repo.load() is None: compute(0,False,repo)
+            app.state.baseline_snapshot=compute(0,False,repo)
         scheduler=BackgroundScheduler()
         if settings.schedule:
             scheduler.add_job(tick,'interval',seconds=settings.interval_seconds,max_instances=1,coalesce=True)
@@ -94,7 +94,9 @@ def create_app(settings: Settings | None = None):
     def model_card(): return app.state.models.card
 
     @app.get('/dashboard')
-    def dashboard():
+    def dashboard(mode: str | None = None):
+        if mode == 'live':
+            return getattr(app.state, 'baseline_snapshot', None) or app.state.repo.load()['snapshot']
         # Read committed run ID before using Redis: a failed cache invalidation cannot serve an old run.
         state=app.state.repo.load(); snapshot=state['snapshot']
         cache=app.state.cache

@@ -330,6 +330,9 @@ function App() {
     setGeoPreset('mandakini')
     setSelectedEvent(null)
     send('pause')
+    send('reset')
+    setSeek(0)
+    queryClient.invalidateQueries({ queryKey: ['dashboard'] })
   }
 
   // Accordion toggle helper
@@ -839,8 +842,11 @@ function App() {
                     />
 
                     <button
-                      onClick={() => send('reset')}
-                      className="btn-secondary py-1 px-2.5 text-xs"
+                      onClick={() => {
+                        send('reset')
+                        setSeek(0)
+                      }}
+                      className="btn-secondary py-1 px-2.5 text-xs cursor-pointer"
                       title="Reset historical sequence to start"
                     >
                       <RotateCcw size={13} />
