@@ -903,11 +903,11 @@ export default function WatershedMap({
         </div>
       )}
 
-      {/* Bottom Left Map Legend (Section 7 Requirements) */}
-      <div className="absolute bottom-2.5 left-3 bg-white/95 backdrop-blur border border-[#D5DDE4] px-3 py-2 rounded shadow-md text-xs space-y-1.5 z-10 max-w-sm">
+      {/* Bottom Left Map Legend (Positioned safely above sliding dock bar) */}
+      <div className="absolute bottom-12 left-3 bg-white/95 backdrop-blur border border-slate-200/90 px-3 py-1.5 rounded-lg shadow-sm text-xs space-y-1.5 z-10 max-w-sm">
         <div className="flex items-center justify-between border-b border-slate-200 pb-1">
-          <span className="text-[10px] font-extrabold text-slate-700 uppercase tracking-wider">
-            LEGEND
+          <span className="text-[10px] font-bold text-slate-700 uppercase tracking-wider">
+            Hydrological Legend
           </span>
           <span className="text-[9px] text-slate-400">CartoDB &middot; WGS 84</span>
         </div>
@@ -940,7 +940,7 @@ export default function WatershedMap({
           </div>
           <div className="flex items-center gap-1">
             <span className="text-blue-600 font-bold">◆</span>
-            <span>Extreme Rainfall</span>
+            <span>Extreme Rain</span>
           </div>
           <div className="flex items-center gap-1">
             <span className="text-amber-700 font-bold">◆</span>
@@ -952,17 +952,17 @@ export default function WatershedMap({
         <div className="flex items-center gap-4 text-[10px] text-slate-600 pt-0.5 border-t border-slate-100">
           <div className="flex items-center gap-1.5">
             <span className="w-4 h-1 bg-[#174A7E] rounded" />
-            <span>AAGAAH Model Coverage</span>
+            <span>Model Reach Coverage</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-4 h-0.5 border-b border-dashed border-slate-500" />
-            <span>Regional Context</span>
+            <span>Regional Basin</span>
           </div>
         </div>
       </div>
 
       {/* Bottom Right Coordinates / Cursor Position */}
-      <div className="absolute bottom-2.5 right-12 bg-white/95 backdrop-blur border border-[#D5DDE4] px-2.5 py-1 rounded text-[10px] font-mono text-slate-700 shadow-sm z-10 flex items-center gap-2">
+      <div className="absolute bottom-12 right-12 bg-white/95 backdrop-blur border border-slate-200/90 px-2.5 py-1 rounded-md text-[10px] font-mono text-slate-700 shadow-sm z-10 flex items-center gap-2">
         <span className="text-slate-500 uppercase text-[9px] font-sans font-bold">CURSOR:</span>
         <span className="font-bold text-slate-900">
           {cursorCoords

@@ -975,15 +975,38 @@ h1, h2, h3, h4, p { margin: 0; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 9px 18px;
-  background: #17324A;
-  color: #FFFFFF;
+  padding: 8px 16px;
+  background: #0F172A;
+  color: #F1F5F9;
+  border-top: 1px solid #334155;
   cursor: pointer;
   user-select: none;
+  transition: background 0.15s ease;
 }
 
 .telemetry-dock-header:hover {
-  background: #1e3f5d;
+  background: #1E293B;
+}
+
+.btn-exit-replay {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(190, 18, 60, 0.25);
+  color: #FECDD3;
+  border: 1px solid rgba(244, 63, 94, 0.4);
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-exit-replay:hover {
+  background: rgba(190, 18, 60, 0.5);
+  color: #FFFFFF;
+  border-color: #F43F5E;
 }
 
 .telemetry-cards-strip {

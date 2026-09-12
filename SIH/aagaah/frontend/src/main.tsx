@@ -191,7 +191,7 @@ const SPATIAL_EXTENT_MAP: Record<string, SpatialExtent> = {
 function App() {
   const queryClient = useQueryClient()
   const [activeNav, setActiveNav] = useState<ActiveNav>('situation')
-  const [operationalMode, setOperationalMode] = useState<'live' | 'replay'>('replay')
+  const [operationalMode, setOperationalMode] = useState<'live' | 'replay'>('live')
   const [geoPreset, setGeoPreset] = useState<GeoPreset>('mandakini')
   const [selectedLocation, setSelectedLocation] = useState('kedarnath')
   const [token] = useState(() => sessionStorage.getItem('aagaah-control-token') || 'local-demo-only')
@@ -325,10 +325,11 @@ function App() {
 
   // Exit Replay Mode back to Live Situation
   const exitReplayMode = () => {
-    setOperationalMode('replay')
+    setOperationalMode('live')
     setActiveNav('situation')
     setGeoPreset('mandakini')
     setSelectedEvent(null)
+    send('pause')
   }
 
   // Accordion toggle helper
@@ -439,15 +440,15 @@ function App() {
           </div>
         </div>
 
-        {/* Sidebar Bottom: Single Prominent Demo Scenario Trigger */}
+        {/* Sidebar Bottom: Scenario Library */}
         <div className="sidebar-bottom">
           <button
             onClick={() => setShowDemoModal(true)}
-            className="w-full py-2.5 px-3 bg-[#174A7E] hover:bg-[#123860] rounded text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow-sm"
-            title="Select and launch guided demonstration scenario"
+            className="w-full py-2.5 px-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded text-slate-100 font-semibold text-xs flex items-center justify-center gap-2 transition shadow-xs cursor-pointer"
+            title="Launch historical event reconstruction library"
           >
-            <Sparkles size={14} />
-            <span>DEMO SCENARIO</span>
+            <History size={14} className="text-sky-300" />
+            <span>Simulation Scenarios</span>
           </button>
         </div>
       </aside>
@@ -469,7 +470,7 @@ function App() {
                 }}
               />
               <h1 className="text-base font-extrabold text-white tracking-wide flex items-center gap-2">
-                AAGAAH · आगाह
+                AAGAAH &middot; आगाह
               </h1>
               <span className="text-[12px] font-bold text-sky-200 border-l border-slate-600 pl-3 uppercase">
                 {activeNav === 'situation' && 'Situation'}
@@ -483,55 +484,54 @@ function App() {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Operational Status Indicator */}
+            {/* Mode Controls & Status */}
             {operationalMode === 'live' ? (
-              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#102436] border border-[#2B4764] rounded text-xs text-slate-200">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-semibold text-[11px]">OPERATIONAL</span>
-              </div>
-            ) : (
-              <div className="replay-badge">
-                <History size={13} className="text-amber-300" />
-                <span>REPLAY MODE · HISTORICAL DATA</span>
-              </div>
-            )}
+              <>
+                <div className="flex items-center gap-2 px-2.5 py-1 bg-[#102436] border border-[#2B4764] rounded-md text-xs text-slate-200">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="font-medium text-[11px] text-emerald-300">Live Telemetry Active</span>
+                </div>
 
-            {/* Mode Controls */}
-            {operationalMode === 'live' ? (
-              <div className="flex bg-[#102436] border border-[#2B4764] p-0.5 rounded text-xs">
-                <span className="flex items-center gap-1.5 px-3 py-1 bg-[#174A7E] text-white rounded font-semibold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  Live
-                </span>
+                <div className="flex bg-[#102436] border border-[#2B4764] p-0.5 rounded-md text-xs">
+                  <span className="flex items-center gap-1.5 px-3 py-1 bg-[#174A7E] text-white rounded font-medium">
+                    Live
+                  </span>
+                  <button
+                    onClick={enterReplayMode}
+                    className="flex items-center gap-1.5 px-3 py-1 text-slate-400 hover:text-white rounded font-medium transition cursor-pointer"
+                    title="Switch to historical event replay mode"
+                  >
+                    <History size={12} />
+                    Replay
+                  </button>
+                </div>
+
                 <button
-                  onClick={enterReplayMode}
-                  className="flex items-center gap-1.5 px-3 py-1 text-slate-400 hover:text-white rounded font-semibold transition"
-                  title="Switch to historical event replay mode"
+                  onClick={() => setShowDemoModal(true)}
+                  className="py-1 px-3 bg-slate-800/80 hover:bg-slate-700 border border-slate-600 text-slate-100 font-medium text-xs rounded-md flex items-center gap-1.5 shadow-xs transition cursor-pointer"
+                  title="Open historical case study simulations"
                 >
-                  <History size={12} />
-                  Replay
+                  <History size={13} className="text-amber-300" />
+                  <span>Simulations</span>
                 </button>
-              </div>
+              </>
             ) : (
-              <button
-                onClick={exitReplayMode}
-                className="btn-exit-replay"
-                title="Return to real-time live situation dashboard"
-              >
-                <X size={13} />
-                <span>EXIT REPLAY</span>
-              </button>
-            )}
+              <>
+                <div className="flex items-center gap-2 px-3 py-1 bg-amber-950/40 border border-amber-800/70 rounded-md text-xs text-amber-200">
+                  <History size={13} className="text-amber-400" />
+                  <span className="font-medium text-[11px]">Replay Mode &middot; Kedarnath 2013</span>
+                </div>
 
-            {/* Demo Scenario Modal Trigger */}
-            <button
-              onClick={() => setShowDemoModal(true)}
-              className="py-1 px-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded flex items-center gap-1.5 shadow-sm transition"
-              title="Select and run deterministic historical demonstration"
-            >
-              <Sparkles size={13} />
-              <span>DEMO SCENARIO</span>
-            </button>
+                <button
+                  onClick={exitReplayMode}
+                  className="flex items-center gap-1.5 px-3 py-1 bg-rose-900/40 hover:bg-rose-900/70 border border-rose-700/80 text-rose-200 rounded-md text-xs font-semibold transition cursor-pointer shadow-xs"
+                  title="Return to real-time live situation dashboard"
+                >
+                  <X size={13} />
+                  <span>Exit Replay</span>
+                </button>
+              </>
+            )}
           </div>
         </header>
 
@@ -595,67 +595,53 @@ function App() {
           const pilotCrit = locations.filter(l => l.alert_level === 'Critical').length
           return (
             <div className="national-summary-bar">
-              <div className="flex items-center gap-4 flex-wrap">
+              <div className="flex items-center gap-3 flex-wrap">
                 <div className="summary-metric">
-                  <span className="text-slate-600 font-bold uppercase text-[10px]">MANDAKINI PILOT:</span>
+                  <span className="text-slate-500 font-medium text-[11px]">Basin Status:</span>
                   <span
                     className={`summary-metric-val ${
                       pilotCrit > 0
-                        ? 'bg-red-100 text-red-900 border border-red-300 animate-pulse'
-                        : 'bg-emerald-100 text-emerald-900 border border-emerald-300'
+                        ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                        : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                     }`}
                   >
-                    {pilotCrit > 0 ? `${pilotCrit} CRITICAL REACH DETECTED` : 'ALL 7 REACHES NORMAL (0.3% HAZARD)'}
+                    {pilotCrit > 0 ? `${pilotCrit} Critical Reach Alert` : 'All 7 Reaches Normal (0.3% Baseline)'}
                   </span>
                 </div>
                 <div className="summary-metric">
-                  <span className="text-slate-600 font-bold uppercase text-[10px]">DOCUMENTED CASES:</span>
-                  <button
-                    onClick={() => setShowCriticalExplainer(true)}
-                    className="summary-metric-val bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 cursor-pointer transition flex items-center gap-1.5"
-                    title="Click to see why 2 Critical events are listed"
-                  >
-                    <span>02 CRITICAL BENCHMARKS</span>
-                    <span className="text-[10px] text-red-600 underline font-semibold">(Why 2?)</span>
-                  </button>
-                </div>
-                <div className="summary-metric">
-                  <span className="summary-metric-val bg-amber-50 text-amber-700 border border-amber-200">
-                    01 WARNING
+                  <span className="text-slate-500 font-medium text-[11px]">Regional Alerts:</span>
+                  <span className="summary-metric-val bg-amber-50 text-amber-800 border border-amber-200">
+                    1 Warning
                   </span>
-                </div>
-                <div className="summary-metric">
                   <span className="summary-metric-val bg-yellow-50 text-yellow-800 border border-yellow-200">
-                    02 WATCH
+                    2 Watch
                   </span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 text-slate-600 text-[11px]">
+              <div className="flex items-center gap-2.5 text-slate-600 text-[11px]">
                 <button
                   onClick={() => setShowFiveQuestionsModal(true)}
-                  className="text-white bg-[#174A7E] hover:bg-[#123860] border border-[#2B4764] px-2.5 py-0.5 rounded font-bold text-[11px] flex items-center gap-1.5 shadow-xs cursor-pointer transition"
-                  title="Inspect 5-Question Incident Assessment (Where? How serious? What causes it? What affected? What action?)"
+                  className="bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 px-2.5 py-0.5 rounded font-medium text-[11px] flex items-center gap-1.5 shadow-2xs cursor-pointer transition"
+                  title="Inspect 5-Stage Incident Decision Chain"
                 >
-                  <ShieldAlert size={13} className="text-amber-300" />
-                  <span>5-Question Incident Assessment &rarr;</span>
+                  <ShieldAlert size={13} className="text-[#174A7E]" />
+                  <span>Decision Audit</span>
                 </button>
-                <span className="text-slate-300">|</span>
                 <button
                   onClick={() => setShowRainfallDrawer(true)}
-                  className="text-[#174A7E] bg-blue-50 border border-blue-200 hover:bg-blue-100 px-2 py-0.5 rounded font-bold text-[11px] flex items-center gap-1 cursor-pointer transition"
+                  className="bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 px-2.5 py-0.5 rounded font-medium text-[11px] flex items-center gap-1 cursor-pointer transition shadow-2xs"
                   title="Inspect real-time extracted rainfall & soil telemetry for all 7 stations"
                 >
-                  <CloudRain size={13} />
-                  <span>Rain & Soil Telemetry &rarr;</span>
+                  <CloudRain size={13} className="text-[#174A7E]" />
+                  <span>Station Telemetry</span>
                 </button>
-                <span className="text-slate-300">|</span>
                 <button
                   onClick={() => setShowCriticalExplainer(true)}
-                  className="text-[#174A7E] hover:underline font-bold text-[11px] flex items-center gap-1 cursor-pointer"
+                  className="text-slate-500 hover:text-slate-800 font-medium text-[11px] flex items-center gap-1 cursor-pointer transition ml-1"
                 >
                   <Info size={13} />
-                  <span>Explain Critical Benchmarks &rarr;</span>
+                  <span>Threshold Reference</span>
                 </button>
               </div>
             </div>
@@ -695,17 +681,17 @@ function App() {
                     onClick={() => setShowTelemetryDock(!showTelemetryDock)}
                   >
                     <div className="flex items-center gap-2.5">
-                      <CloudRain size={16} className="text-blue-300" />
-                      <span className="font-bold text-xs tracking-wide">
-                        REAL-TIME BASIN TELEMETRY DOCK ({locations.length} GAUGED RIVER STATIONS)
+                      <CloudRain size={15} className="text-sky-400" />
+                      <span className="font-semibold text-xs text-slate-100 tracking-normal">
+                        Basin Telemetry & Gauged River Stations ({locations.length})
                       </span>
-                      <span className="text-[11px] text-slate-300 hidden md:inline">
-                        &bull; Multi-Window Rainfall (1h/3h/24h), Antecedent Soil Moisture & River Stages
+                      <span className="text-[11px] text-slate-400 font-normal hidden md:inline">
+                        &mdash; Precipitation (1h/3h/24h), Soil Saturation & Gauge Levels
                       </span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-blue-200 hover:text-white">
-                      <span>{showTelemetryDock ? 'Slide Dock Down' : 'Slide Telemetry Window Up'}</span>
-                      {showTelemetryDock ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
+                    <div className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-white transition cursor-pointer">
+                      <span>{showTelemetryDock ? 'Hide Station Telemetry' : 'View Station Telemetry'}</span>
+                      {showTelemetryDock ? <ChevronDown size={15} /> : <ChevronUp size={15} />}
                     </div>
                   </div>
 
@@ -863,13 +849,16 @@ function App() {
                   </div>
 
                   {/* Verified Lead-Time Callout */}
-                  <div className="p-2.5 bg-amber-50/70 border border-amber-200 rounded flex items-center justify-between text-[11px]">
-                    <span className="text-slate-700">
-                      Historical Moraine Breach: <strong>June 16, 13:30 UTC</strong> &middot; Model Critical Alert: <strong>June 16, 03:00 UTC</strong>
-                    </span>
-                    <span className="text-[#174A7E] font-bold font-mono">
-                      Lead Time: 10.5 Hours (Out-of-sample historical replay)
-                    </span>
+                  <div className="p-2.5 bg-amber-50/80 border border-amber-200/90 rounded-md text-xs text-slate-700 flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="inline-block w-2 h-2 rounded-full bg-amber-500" />
+                      <span>Moraine Breach: <strong>June 16, 13:30 UTC</strong></span>
+                      <span className="text-slate-400">&bull;</span>
+                      <span>Model Critical Alert: <strong>June 16, 03:00 UTC</strong></span>
+                    </div>
+                    <div className="font-semibold text-[#174A7E] bg-white px-2.5 py-0.5 rounded border border-amber-200 text-[11px] whitespace-nowrap">
+                      Lead Time: <strong>10.5 Hours Advance</strong>
+                    </div>
                   </div>
                 </div>
               )}
