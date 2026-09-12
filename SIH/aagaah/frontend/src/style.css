@@ -1075,3 +1075,90 @@ h1, h2, h3, h4, p { margin: 0; }
   border-radius: 5px;
 }
 
+/* ====================================================================
+   REPLAY TIMELINE BAR & RESPONSIVE CONTAINER
+   ==================================================================== */
+.replay-timeline-bar {
+  background: #FFFFFF;
+  border: 1px solid #D5DDE4;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+  width: 100%;
+}
+
+/* ====================================================================
+   5-STAGE INCIDENT DECISION CHAIN
+   Where is risk? -> How serious? -> What causes it? -> What affected? -> What action?
+   ==================================================================== */
+.decision-chain-box {
+  background: #FFFFFF;
+  border: 1px solid #D5DDE4;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.decision-chain-header {
+  background: #17324A;
+  color: #FFFFFF;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.decision-chain-step {
+  padding: 11px 14px;
+  border-bottom: 1px solid #E2E8F0;
+  transition: background 0.12s ease;
+}
+
+.decision-chain-step:last-child {
+  border-bottom: none;
+}
+
+.decision-chain-step:hover {
+  background: #F8FAFC;
+}
+
+.decision-step-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.decision-step-title {
+  display: flex;
+  align-items: center;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #17212B;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.decision-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #174A7E;
+  color: #FFFFFF;
+  font-size: 10.5px;
+  font-weight: 800;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.decision-step-body {
+  padding-left: 28px;
+  font-size: 11px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+

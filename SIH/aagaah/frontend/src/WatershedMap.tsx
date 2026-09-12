@@ -178,7 +178,8 @@ export default function WatershedMap({
   currentPreset = 'india',
   onPresetChange,
   onSelectEvent,
-  selectedEvent = null
+  selectedEvent = null,
+  operationalMode = 'live'
 }: {
   pilot: Pilot
   locations: LocationRisk[]
@@ -189,6 +190,7 @@ export default function WatershedMap({
   onPresetChange?: (preset: 'india' | 'himalayas' | 'uttarakhand' | 'mandakini' | 'location') => void
   onSelectEvent?: (event: NationalEvent) => void
   selectedEvent?: NationalEvent | null
+  operationalMode?: 'live' | 'replay'
 }) {
   const host = useRef<HTMLDivElement>(null)
   const map = useRef<MapInstance | null>(null)
@@ -236,6 +238,16 @@ export default function WatershedMap({
       }
     }
   }
+
+  // Auto-resize map when operationalMode or layout shifts
+  useEffect(() => {
+    if (ready && map.current) {
+      const timer = setTimeout(() => {
+        map.current?.resize()
+      }, 100)
+      return () => clearTimeout(timer)
+    }
+  }, [operationalMode, ready])
 
   // React to preset changes from parent
   useEffect(() => {
