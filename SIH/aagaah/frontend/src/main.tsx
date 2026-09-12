@@ -1211,7 +1211,7 @@ function App() {
                             {niceName(currentLocation.name).toUpperCase()}
                           </h2>
                           <p className="text-[11px] text-slate-300">
-                            Elevation: {currentLocation.terrain.elevation}m &middot; Slope: {currentLocation.terrain.slope_deg}°
+                            Elevation: {(currentLocation.terrain.elevation_m || currentLocation.terrain.elevation)}m &middot; Slope: {currentLocation.terrain.slope_deg}°
                           </p>
                         </div>
                         <div className="flex items-center gap-2">
@@ -1463,7 +1463,7 @@ function App() {
                             </div>
                             <div className="decision-step-body space-y-1">
                               <strong className="text-slate-900 block text-xs">
-                                {niceName(currentLocation.name)} &middot; Elevation: {currentLocation.terrain.elevation}m
+                                {niceName(currentLocation.name)} &middot; Elevation: {(currentLocation.terrain.elevation_m || currentLocation.terrain.elevation)}m
                               </strong>
                               <div className="text-slate-600 text-[11px] flex items-center gap-3">
                                 <span>Slope: <strong>{currentLocation.terrain.slope_deg}°</strong></span>
@@ -1892,7 +1892,7 @@ function App() {
                             </div>
                             <div className="flex flex-col gap-0.5 mt-0.5">
                               <span className="text-[11px] text-slate-500 font-mono">
-                                Hazard: <strong className="text-red-700">{percent(loc.routed_risk)}</strong> &middot; Elev: {loc.terrain.elevation}m
+                                Hazard: <strong className="text-red-700">{percent(loc.routed_risk)}</strong> &middot; Elev: {(loc.terrain.elevation_m || loc.terrain.elevation)}m
                               </span>
                               <span className="text-[10px] text-slate-500 font-mono">
                                 3h Rain: <strong className="text-[#174A7E]">{loc.features.rain_3h !== null && loc.features.rain_3h !== undefined ? `${loc.features.rain_3h.toFixed(1)}mm` : '0.0mm'}</strong> &middot; Soil: <strong className="text-amber-800">{loc.features.soil_moisture ? `${(loc.features.soil_moisture * 100).toFixed(0)}%` : '30%'}</strong>
@@ -1979,7 +1979,7 @@ function App() {
                             <span className="text-slate-300">&bull;</span>
                             <span>Soil: <strong className="text-amber-800">{loc.features.soil_moisture ? `${(loc.features.soil_moisture * 100).toFixed(0)}%` : '30%'}</strong></span>
                             <span className="text-slate-300">&bull;</span>
-                            <span>Elev: <strong>{loc.terrain.elevation}m</strong></span>
+                            <span>Elev: <strong>{(loc.terrain.elevation_m || loc.terrain.elevation)}m</strong></span>
                             <span className="text-slate-300">&bull;</span>
                             <span>Slope: <strong>{loc.terrain.slope_deg}°</strong></span>
                           </div>
@@ -2172,7 +2172,7 @@ function App() {
                             {niceName(currentLocation.name)} &middot; Mandakini Reach #{currentLocation.rank}
                           </strong>
                           <div className="text-slate-600 text-[11px] flex items-center gap-3">
-                            <span>Elev: <strong>{currentLocation.terrain.elevation}m</strong></span>
+                            <span>Elev: <strong>{(currentLocation.terrain.elevation_m || currentLocation.terrain.elevation)}m</strong></span>
                             <span>Slope: <strong>{currentLocation.terrain.slope_deg}°</strong></span>
                             <span>Catchment: <strong>{currentLocation.terrain.upstream_area_km2 || 47.7} km²</strong></span>
                           </div>
@@ -2733,7 +2733,7 @@ function App() {
                 <div className="pl-6 text-[11px] text-slate-700 space-y-1">
                   <div><strong>Location:</strong> {niceName(currentLocation.name)} (Mandakini River Valley, Uttarakhand)</div>
                   <div className="text-slate-600">
-                    <strong>Elevation:</strong> {currentLocation.terrain.elevation}m &middot; <strong>Slope:</strong> {currentLocation.terrain.slope_deg}° &middot; <strong>Distance to River:</strong> {currentLocation.terrain.river_distance_m || 25}m
+                    <strong>Elevation:</strong> {(currentLocation.terrain.elevation_m || currentLocation.terrain.elevation)}m &middot; <strong>Slope:</strong> {currentLocation.terrain.slope_deg}° &middot; <strong>Distance to River:</strong> {currentLocation.terrain.river_distance_m || 25}m
                   </div>
                   <div className="font-mono text-slate-500">
                     <strong>Coordinates:</strong> {currentLocation.lat.toFixed(3)}°N, {currentLocation.lon.toFixed(3)}°E &middot; Drainage Area: {currentLocation.terrain.upstream_area_km2 || 47.7} km²
