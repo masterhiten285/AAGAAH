@@ -1,0 +1,18 @@
+[
+  {
+    "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N30_00_E078_00_DEM/Copernicus_DSM_COG_10_N30_00_E078_00_DEM.tif",
+    "file": "dem_78.tif",
+    "sha256": "1666bc434ca738c188149bc244614491bd0e94e16018cfbeeea789231f8ba0c7",
+    "bytes": 43323128,
+    "status": "VERIFIED LIVE",
+    "note": "Downloaded static DSM, not a live elevation sensor."
+  },
+  {
+    "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N30_00_E079_00_DEM/Copernicus_DSM_COG_10_N30_00_E079_00_DEM.tif",
+    "file": "dem_79.tif",
+    "sha256": "b24a393f1e1756a975b63df8ef81f9570a5b7622932d197149302a1b8e192ec1",
+    "bytes": 41706694,
+    "status": "VERIFIED LIVE",
+    "note": "Downloaded static DSM, not a live elevation sensor."
+  }
+]

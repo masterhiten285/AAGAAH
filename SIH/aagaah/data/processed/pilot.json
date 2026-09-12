@@ -1,0 +1,235 @@
+{
+  "id": "mandakini-v1",
+  "name": "Mandakini watershed",
+  "status": "PROVISIONAL DEM DELINEATION",
+  "crs": "EPSG:32644",
+  "source_resolution_m": 30,
+  "analysis_resolution_m": 120,
+  "outlet": [
+    78.97885235027505,
+    30.30195460435751
+  ],
+  "area_km2": 1637.914,
+  "locations": [
+    {
+      "id": "kedarnath",
+      "name": "Kedarnath",
+      "lon": 79.0669073,
+      "lat": 30.7338877,
+      "settlement_lon": 79.0669073,
+      "settlement_lat": 30.7338877,
+      "osm_id": 1188262619,
+      "geometry_status": "VERIFIED LIVE",
+      "population": null,
+      "outlet": [
+        79.06776279678532,
+        30.72766459103734
+      ],
+      "terrain": {
+        "slope_deg": 5.15,
+        "elevation_m": 3539.1,
+        "river_distance_m": 136.2,
+        "upstream_area_km2": 47.693
+      }
+    },
+    {
+      "id": "gaurikund",
+      "name": "Gaurikund",
+      "lon": 79.0268198,
+      "lat": 30.6534016,
+      "settlement_lon": 79.0268198,
+      "settlement_lat": 30.6534016,
+      "osm_id": 342108397,
+      "geometry_status": "VERIFIED LIVE",
+      "population": null,
+      "outlet": [
+        79.02302365100864,
+        30.647966066071202
+      ],
+      "terrain": {
+        "slope_deg": 6.89,
+        "elevation_m": 1992.2,
+        "river_distance_m": 31.4,
+        "upstream_area_km2": 89.957
+      }
+    },
+    {
+      "id": "sonprayag",
+      "name": "Sonprayag",
+      "lon": 78.9986617,
+      "lat": 30.6317057,
+      "settlement_lon": 78.9986617,
+      "settlement_lat": 30.6317057,
+      "osm_id": 1809868954,
+      "geometry_status": "VERIFIED LIVE",
+      "population": null,
+      "outlet": [
+        79.00467101699581,
+        30.62711748875198
+      ],
+      "terrain": {
+        "slope_deg": 18.7,
+        "elevation_m": 1711.3,
+        "river_distance_m": 85.8,
+        "upstream_area_km2": 246.398
+      }
+    },
+    {
+      "id": "guptkashi",
+      "name": "Guptkashi",
+      "lon": 79.0817757,
+      "lat": 30.5283243,
+      "settlement_lon": 79.0817757,
+      "settlement_lat": 30.5283243,
+      "osm_id": 342108333,
+      "geometry_status": "VERIFIED LIVE",
+      "population": null,
+      "outlet": [
+        79.08576549239436,
+        30.513585030956122
+      ],
+      "terrain": {
+        "slope_deg": 14.51,
+        "elevation_m": 1410.9,
+        "river_distance_m": 786.9,
+        "upstream_area_km2": 896.213
+      }
+    },
+    {
+      "id": "chandrapuri",
+      "name": "Chandrapuri (001)",
+      "lon": 79.0684731,
+      "lat": 30.4250535,
+      "settlement_lon": 79.0684731,
+      "settlement_lat": 30.4250535,
+      "osm_id": 342108043,
+      "geometry_status": "VERIFIED LIVE",
+      "population": null,
+      "outlet": [
+        79.06387986038831,
+        30.419077722774503
+      ],
+      "terrain": {
+        "slope_deg": 14.91,
+        "elevation_m": 871.1,
+        "river_distance_m": 119.4,
+        "upstream_area_km2": 1192.262
+      }
+    },
+    {
+      "id": "agastmuni",
+      "name": "Agastmuni",
+      "lon": 79.0260363,
+      "lat": 30.3919603,
+      "settlement_lon": 79.0260363,
+      "settlement_lat": 30.3919603,
+      "osm_id": 7835565001,
+      "geometry_status": "VERIFIED LIVE",
+      "population": null,
+      "outlet": [
+        79.01824491128737,
+        30.390246024603524
+      ],
+      "terrain": {
+        "slope_deg": 5.13,
+        "elevation_m": 811.6,
+        "river_distance_m": 68.8,
+        "upstream_area_km2": 1250.755
+      }
+    },
+    {
+      "id": "rudraprayag",
+      "name": "Rudraprayag approach",
+      "lon": 78.97885235027505,
+      "lat": 30.30195460435751,
+      "settlement_lon": 78.98072,
+      "settlement_lat": 30.28656,
+      "osm_id": 342107378,
+      "geometry_status": "VERIFIED LIVE",
+      "population": null,
+      "outlet": [
+        78.97885235027505,
+        30.30195460435751
+      ],
+      "terrain": {
+        "slope_deg": 15.79,
+        "elevation_m": 670.9,
+        "river_distance_m": 142.9,
+        "upstream_area_km2": 1637.914
+      }
+    }
+  ],
+  "edges": [
+    {
+      "upstream": "kedarnath",
+      "downstream": "gaurikund",
+      "length_m": 10938.5,
+      "method": "DEM D8 flow path"
+    },
+    {
+      "upstream": "gaurikund",
+      "downstream": "sonprayag",
+      "length_m": 4366.2,
+      "method": "DEM D8 flow path"
+    },
+    {
+      "upstream": "sonprayag",
+      "downstream": "guptkashi",
+      "length_m": 19310.9,
+      "method": "DEM D8 flow path"
+    },
+    {
+      "upstream": "guptkashi",
+      "downstream": "chandrapuri",
+      "length_m": 12390.6,
+      "method": "DEM D8 flow path"
+    },
+    {
+      "upstream": "chandrapuri",
+      "downstream": "agastmuni",
+      "length_m": 6522.6,
+      "method": "DEM D8 flow path"
+    },
+    {
+      "upstream": "agastmuni",
+      "downstream": "rudraprayag",
+      "length_m": 14526.5,
+      "method": "DEM D8 flow path"
+    }
+  ],
+  "station_coverage": [
+    {
+      "name": "Chandrapuri",
+      "type": "CWC rainfall inventory",
+      "observations_access": "PLANNED",
+      "lat": 30.430833,
+      "lon": 79.069167
+    }
+  ],
+  "scientific_readiness": false,
+  "boundary_touches_dem_edge": false,
+  "limitations": [
+    "120m analysis of a surface model; not a surveyed hydrological boundary",
+    "No accessible gauge history verified",
+    "OSM infrastructure coverage incomplete; population unknown",
+    "Current terrain/infrastructure do not reconstruct 2013 conditions"
+  ],
+  "terrain_image_corners": [
+    [
+      78.6299069166961,
+      30.979632733640237
+    ],
+    [
+      79.50037365030431,
+      30.992676214794386
+    ],
+    [
+      79.51329383910564,
+      30.149416800050435
+    ],
+    [
+      78.6503129153439,
+      30.136802200209814
+    ]
+  ]
+}

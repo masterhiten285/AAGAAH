@@ -1,0 +1,181 @@
+[
+  {
+    "id": "imerg",
+    "url": "https://jsimpsonhttps.pps.eosdis.nasa.gov/imerg/gis/early/",
+    "tested_at": "2026-09-11T19:09:34.954596+00:00",
+    "authenticated": false,
+    "http_status": 401,
+    "error": "HTTP Error 401: Unauthorized",
+    "note": "No usable sample; provider remains PLANNED."
+  },
+  {
+    "id": "imd",
+    "url": "https://imdpune.gov.in/cmpg/Griddata/Rainfall_25_NetCDF.html",
+    "tested_at": "2026-09-11T19:09:34.956601+00:00",
+    "authenticated": false,
+    "http_status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 14141,
+    "final_url": "https://imdpune.gov.in/cmpg/Griddata/Rainfall_25_NetCDF.html",
+    "sha256": "5a68a976b9f0e47d6851fe4a8433d73bcddc718956167db7e6f28bf4eecc0e60",
+    "sample": "data/raw/imd.txt",
+    "note": "Transport verified; interpret product/auth/coverage separately in source registry."
+  },
+  {
+    "id": "mosdac",
+    "url": "https://mosdac.gov.in/downloadapi-manual",
+    "tested_at": "2026-09-11T19:09:34.956601+00:00",
+    "authenticated": false,
+    "http_status": null,
+    "error": "The read operation timed out",
+    "note": "No usable sample; provider remains PLANNED."
+  },
+  {
+    "id": "copernicus",
+    "url": "https://copernicus-dem-30m.s3.amazonaws.com/?list-type=2&prefix=Copernicus_DSM_COG_10_N30_00_E079_00_DEM&max-keys=5",
+    "tested_at": "2026-09-11T19:09:34.956601+00:00",
+    "authenticated": false,
+    "http_status": 200,
+    "content_type": "application/xml",
+    "bytes": 1941,
+    "final_url": "https://copernicus-dem-30m.s3.amazonaws.com/?list-type=2&prefix=Copernicus_DSM_COG_10_N30_00_E079_00_DEM&max-keys=5",
+    "sha256": "2a54d684b17021a7c6aa797f525eec4122b07ed91e149cc4c0fa85f3f20bf9e6",
+    "sample": "data/raw/copernicus.txt",
+    "note": "Transport verified; interpret product/auth/coverage separately in source registry."
+  },
+  {
+    "id": "wris",
+    "url": "https://indiawris.gov.in/wris/",
+    "tested_at": "2026-09-11T19:09:34.957600+00:00",
+    "authenticated": false,
+    "http_status": null,
+    "error": "<urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>",
+    "note": "No usable sample; provider remains PLANNED."
+  },
+  {
+    "id": "cwc",
+    "url": "https://www.cwc.gov.in/sites/default/files/meteorological-network-details-of-cwc.pdf",
+    "tested_at": "2026-09-11T19:09:35.860439+00:00",
+    "authenticated": false,
+    "http_status": 200,
+    "content_type": "application/pdf",
+    "bytes": 4311320,
+    "final_url": "https://www.cwc.gov.in/sites/default/files/meteorological-network-details-of-cwc.pdf",
+    "sha256": "0f52ea4ab974ce11aadf81d87392a0403733f4da10d44bf6ef4259f74d8c405d",
+    "sample": "data/raw/cwc.pdf",
+    "note": "Transport verified; interpret product/auth/coverage separately in source registry."
+  },
+  {
+    "id": "sentinel1",
+    "url": "https://catalogue.dataspace.copernicus.eu/odata/v1/Products?%24filter=Collection%2FName+eq+%27SENTINEL-1%27+and+OData.CSC.Intersects%28area%3Dgeography%27SRID%3D4326%3BPOLYGON%28%2878.8+30.2%2C79.4+30.2%2C79.4+30.9%2C78.8+30.9%2C78.8+30.2%29%29%27%29&%24top=1",
+    "tested_at": "2026-09-11T19:09:36.473428+00:00",
+    "authenticated": false,
+    "http_status": 200,
+    "content_type": "application/json",
+    "bytes": 1594,
+    "final_url": "https://catalogue.dataspace.copernicus.eu/odata/v1/Products?%24filter=Collection%2FName+eq+%27SENTINEL-1%27+and+OData.CSC.Intersects%28area%3Dgeography%27SRID%3D4326%3BPOLYGON%28%2878.8+30.2%2C79.4+30.2%2C79.4+30.9%2C78.8+30.9%2C78.8+30.2%29%29%27%29&%24top=1",
+    "sha256": "c7de7ede1a9bfc9bc73cdde59592c3ba8e9b381166dabf19fcc3a63c31ded94a",
+    "sample": "data/raw/sentinel1.json",
+    "payload_keys": [
+      "@odata.context",
+      "value",
+      "@odata.nextLink"
+    ],
+    "products": 1,
+    "note": "Transport verified; interpret product/auth/coverage separately in source registry."
+  },
+  {
+    "id": "jrc",
+    "url": "https://global-surface-water.appspot.com/download",
+    "tested_at": "2026-09-11T19:09:36.652244+00:00",
+    "authenticated": false,
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 82680,
+    "final_url": "https://global-surface-water.appspot.com/download",
+    "sha256": "bc07b9e5b6a7627d5c2082d9e314e90ed039359cce74c19f8fc71f8414228b7d",
+    "sample": "data/raw/jrc.txt",
+    "note": "Transport verified; interpret product/auth/coverage separately in source registry."
+  },
+  {
+    "id": "osm",
+    "url": "https://overpass-api.de/api/interpreter",
+    "tested_at": "2026-09-11T19:09:37.674607+00:00",
+    "authenticated": false,
+    "http_status": 200,
+    "content_type": "application/json",
+    "bytes": 896616,
+    "final_url": "https://overpass-api.de/api/interpreter",
+    "sha256": "da9b08b008febbe54d2637e802c9563e4499f9e6163e42cce488cb1f07a050aa",
+    "sample": "data/raw/osm.json",
+    "payload_keys": [
+      "version",
+      "generator",
+      "osm3s",
+      "elements"
+    ],
+    "elements": 1885,
+    "note": "Transport verified; interpret product/auth/coverage separately in source registry."
+  },
+  {
+    "id": "reports",
+    "url": "https://nidm.gov.in/PDF/pubs/India%20Disaster%20Report%202013.pdf",
+    "tested_at": "2026-09-11T19:09:38.796265+00:00",
+    "authenticated": false,
+    "http_status": 200,
+    "content_type": "application/pdf",
+    "bytes": 2554532,
+    "final_url": "https://nidm.gov.in/PDF/pubs/India%20Disaster%20Report%202013.pdf",
+    "sha256": "17c960658a0e047338717a464f79fa6cccb00749fbf2af87f5c16214dc020922",
+    "sample": "data/raw/reports.pdf",
+    "note": "Transport verified; interpret product/auth/coverage separately in source registry."
+  },
+  {
+    "id": "openmeteo",
+    "url": "https://api.open-meteo.com/v1/forecast?latitude=30.7346&longitude=79.0669&hourly=precipitation,soil_moisture_0_to_1cm&forecast_days=1",
+    "tested_at": "2026-09-11T19:09:40.167993+00:00",
+    "authenticated": false,
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "bytes": 1046,
+    "final_url": "https://api.open-meteo.com/v1/forecast?latitude=30.7346&longitude=79.0669&hourly=precipitation,soil_moisture_0_to_1cm&forecast_days=1",
+    "sha256": "0ff9ee558112215664d6f7cd7131e2cdf7d95c8c05d3f4f26f9e5cd1cf949bde",
+    "sample": "data/raw/openmeteo.json",
+    "payload_keys": [
+      "latitude",
+      "longitude",
+      "generationtime_ms",
+      "utc_offset_seconds",
+      "timezone",
+      "timezone_abbreviation",
+      "elevation",
+      "hourly_units",
+      "hourly"
+    ],
+    "note": "Transport verified; interpret product/auth/coverage separately in source registry."
+  },
+  {
+    "id": "openmeteo_archive",
+    "url": "https://archive-api.open-meteo.com/v1/archive?latitude=30.7346&longitude=79.0669&start_date=2013-06-14&end_date=2013-06-18&hourly=precipitation,soil_moisture_0_to_7cm",
+    "tested_at": "2026-09-11T19:09:41.201083+00:00",
+    "authenticated": false,
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "bytes": 3926,
+    "final_url": "https://archive-api.open-meteo.com/v1/archive?latitude=30.7346&longitude=79.0669&start_date=2013-06-14&end_date=2013-06-18&hourly=precipitation,soil_moisture_0_to_7cm",
+    "sha256": "5d00214c136ceedb48bee44b0758cecb8f749bffca8e0979d75ad7a8f6a96ee7",
+    "sample": "data/raw/openmeteo_archive.json",
+    "payload_keys": [
+      "latitude",
+      "longitude",
+      "generationtime_ms",
+      "utc_offset_seconds",
+      "timezone",
+      "timezone_abbreviation",
+      "elevation",
+      "hourly_units",
+      "hourly"
+    ],
+    "note": "Transport verified; interpret product/auth/coverage separately in source registry."
+  }
+]

@@ -1,0 +1,38 @@
+# Python Virtual Environment
+.venv/
+**/.venv/
+venv/
+**/venv/
+ENV/
+env/
+
+# Python Cache
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.class
+.pytest_cache/
+**/.pytest_cache/
+
+# Node & Frontend
+node_modules/
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+**/dist/
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment Variables
+.env
+*.env.local

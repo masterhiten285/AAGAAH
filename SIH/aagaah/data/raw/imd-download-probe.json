@@ -1,0 +1,9 @@
+{
+  "id": "imd_download",
+  "url": "https://imdpune.gov.in/cmpg/Griddata/RF25.php",
+  "tested_at": "2026-09-11T19:25:22.322395+00:00",
+  "authenticated": false,
+  "http_status": null,
+  "error": "<urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>",
+  "note": "No usable sample; provider remains PLANNED."
+}

@@ -1,0 +1,17 @@
+**/.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+node_modules/
+dist/
+.env
+artifacts/models/
+data/raw/*.tif
+data/raw/*.zip
+test-results/
+playwright-report/
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db

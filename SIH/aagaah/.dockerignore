@@ -1,0 +1,12 @@
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+frontend/dist
+data/raw/dem_*.tif
+data/raw/*.pdf
+data/raw/*.txt
+artifacts
+test-results
+playwright-report
+.git
+.env

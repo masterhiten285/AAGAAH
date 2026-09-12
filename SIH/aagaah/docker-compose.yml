@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgis/postgis:15-3.5
+    environment:
+      POSTGRES_USER: aagaah
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-aagaah-local-demo}
+      POSTGRES_DB: aagaah
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aagaah -d aagaah"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--maxmemory", "128mb", "--maxmemory-policy", "allkeys-lru"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  backend-api:
+    build:
+      context: .
+      dockerfile: backend-api/Dockerfile
+    environment:
+      AAGAAH_DATABASE_URL: postgresql+psycopg://aagaah:${POSTGRES_PASSWORD:-aagaah-local-demo}@postgres:5432/aagaah
+      AAGAAH_REDIS_URL: redis://redis:6379/0
+      AAGAAH_CONTROL_TOKEN: ${AAGAAH_CONTROL_TOKEN:-local-demo-only}
+    command: ["sh", "-c", "alembic -c database/alembic.ini upgrade head && python database/seed.py && exec uvicorn aagaah.main:app --host 0.0.0.0 --port 8000"]
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+  ingestion-service:
+    build:
+      context: .
+      dockerfile: backend-api/Dockerfile
+    command: ["python", "data-ingestion/worker.py"]
+    environment:
+      AAGAAH_CONTROL_TOKEN: ${AAGAAH_CONTROL_TOKEN:-local-demo-only}
+      AAGAAH_INTERVAL_SECONDS: 8
+    depends_on:
+      backend-api: {condition: service_healthy}
+  frontend:
+    build: ./frontend
+    ports: ["127.0.0.1:8080:80"]
+    depends_on:
+      backend-api: {condition: service_healthy}
+volumes:
+  postgres-data:

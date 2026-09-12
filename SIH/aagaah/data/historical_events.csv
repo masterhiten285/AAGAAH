@@ -1,0 +1,4 @@
+event_id,event_group,date,location,severity,mechanism,label_use,source_url
+kedarnath-2013-first,uttarakhand-2013,2013-06-16,Kedarnath Mandakini valley,severe reported,rainfall and debris flooding,context only; correlated with next episode,https://nidm.gov.in/PDF/pubs/India%20Disaster%20Report%202013.pdf
+kedarnath-2013-second,uttarakhand-2013,2013-06-17,Kedarnath downstream Mandakini,severe reported,Chorabari lake outburst and debris flooding,context only; not an independent training event,https://nidm.gov.in/PDF/pubs/India%20Disaster%20Report%202013.pdf
+chamoli-2021,chamoli-2021,2021-02-07,Rishiganga Dhauliganga Chamoli,severe reported,rock ice avalanche and debris flood,external mechanism context; outside pilot; not rainfall target,https://nidm.gov.in/pdf/trgReports/2021/July/Report_26July2021sp.pdf
