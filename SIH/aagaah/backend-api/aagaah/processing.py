@@ -47,8 +47,6 @@ def features_at(readings: list[Reading], location: dict, as_of: datetime):
     missing = [k for k, v in features.items() if not math.isfinite(v)]
     recent_rows = [r for r in rows if r.observed_at > as_of - timedelta(hours=24)]
     return features, {'age_hours': round(age, 2), 'coverage': coverage, 'missing_features': missing,
-                      'latest_observed_at': latest.observed_at.isoformat() if latest else None,
-                      'latest_available_at': latest.available_at.isoformat() if latest else None,
                       'rejected': rejected, 'stale': age > 2, 'no_data': latest is None,
                       'statuses': sorted({r.status.value for r in recent_rows}),
                       'synthetic': any(r.synthetic for r in recent_rows),

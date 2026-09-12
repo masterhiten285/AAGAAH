@@ -3,7 +3,7 @@ import json
 import math
 import networkx as nx
 from pyproj import Transformer
-from shapely.geometry import shape, mapping
+from shapely.geometry import shape
 from shapely.ops import transform, unary_union
 from .config import ROOT
 
@@ -13,18 +13,6 @@ RECOMMENDATIONS={
     'Warning':'Request field verification of river crossings and prepare response teams.',
     'Critical':'Urgent authority review: verify river conditions and consider restricting exposed crossings under local protocols.',
     'Unknown':'Restore missing observations and request a manual situation assessment.'}
-
-def screening_corridor():
-    """Display the metric screening rule, clipped to the provisional pilot footprint."""
-    load=lambda name:json.loads((ROOT/'data/processed'/name).read_text(encoding='utf8'))
-    project=Transformer.from_crs(4326,32644,always_xy=True).transform
-    unproject=Transformer.from_crs(32644,4326,always_xy=True).transform
-    rivers=transform(project,unary_union([shape(f['geometry']) for f in load('rivers.geojson')['features']]))
-    basin=transform(project,unary_union([shape(f['geometry']) for f in load('catchments.geojson')['features']]))
-    geometry=transform(unproject,rivers.buffer(150).intersection(basin))
-    return {'type':'FeatureCollection','features':[{'type':'Feature','geometry':mapping(geometry),
-        'properties':{'distance_m':150,'status':'DERIVED STATIC',
-            'method':'Candidate exposure screening corridor; not a flood inundation boundary'}}]}
 
 def graph_for(pilot):
     graph=nx.DiGraph()

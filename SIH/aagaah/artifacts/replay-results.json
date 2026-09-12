@@ -2,7 +2,7 @@
   "synthetic_frames": [
     {
       "as_of": "2013-06-15T00:00:00+00:00",
-      "computed_at": "2026-09-12T07:45:10.972493+00:00",
+      "computed_at": "2026-09-11T19:55:44.519867+00:00",
       "mode": "REPLAY",
       "synthetic": true,
       "model_status": "MOCKED",
@@ -87,8 +87,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T00:00:00+00:00",
-            "latest_available_at": "2013-06-15T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -531,8 +529,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T00:00:00+00:00",
-            "latest_available_at": "2013-06-15T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -883,8 +879,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T00:00:00+00:00",
-            "latest_available_at": "2013-06-15T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -1202,8 +1196,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T00:00:00+00:00",
-            "latest_available_at": "2013-06-15T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -1476,8 +1468,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T00:00:00+00:00",
-            "latest_available_at": "2013-06-15T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -1727,8 +1717,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T00:00:00+00:00",
-            "latest_available_at": "2013-06-15T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -1917,8 +1905,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T00:00:00+00:00",
-            "latest_available_at": "2013-06-15T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -2051,14 +2037,14 @@
         "population": null,
         "data_adequacy": 0.45
       },
-      "run_id": "c0500115-99ca-4cde-9c85-9238ecdaa250",
+      "run_id": "07d3a529-bba0-4174-89f3-83a9f5f789e1",
       "step": 0,
       "running": false,
       "storage": "MEMORY DEMO \u2014 PostGIS unavailable"
     },
     {
       "as_of": "2013-06-15T12:00:00+00:00",
-      "computed_at": "2026-09-12T07:45:11.377208+00:00",
+      "computed_at": "2026-09-11T19:55:44.812956+00:00",
       "mode": "REPLAY",
       "synthetic": true,
       "model_status": "MOCKED",
@@ -2143,8 +2129,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T12:00:00+00:00",
-            "latest_available_at": "2013-06-15T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -2587,8 +2571,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T12:00:00+00:00",
-            "latest_available_at": "2013-06-15T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -2939,8 +2921,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T12:00:00+00:00",
-            "latest_available_at": "2013-06-15T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -3258,8 +3238,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T12:00:00+00:00",
-            "latest_available_at": "2013-06-15T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -3532,8 +3510,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T12:00:00+00:00",
-            "latest_available_at": "2013-06-15T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -3783,8 +3759,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T12:00:00+00:00",
-            "latest_available_at": "2013-06-15T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -3973,8 +3947,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-15T12:00:00+00:00",
-            "latest_available_at": "2013-06-15T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -4107,14 +4079,14 @@
         "population": null,
         "data_adequacy": 0.45
       },
-      "run_id": "4990afff-3014-4b5f-a8bd-258fb1ad80be",
+      "run_id": "01a9bd15-ec34-45af-9770-9cb8265eb6be",
       "step": 12,
       "running": false,
       "storage": "MEMORY DEMO \u2014 PostGIS unavailable"
     },
     {
       "as_of": "2013-06-16T00:00:00+00:00",
-      "computed_at": "2026-09-12T07:45:11.781242+00:00",
+      "computed_at": "2026-09-11T19:55:45.120674+00:00",
       "mode": "REPLAY",
       "synthetic": true,
       "model_status": "MOCKED",
@@ -4199,8 +4171,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T00:00:00+00:00",
-            "latest_available_at": "2013-06-16T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -4450,8 +4420,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T00:00:00+00:00",
-            "latest_available_at": "2013-06-16T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -4724,8 +4692,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T00:00:00+00:00",
-            "latest_available_at": "2013-06-16T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -5076,8 +5042,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T00:00:00+00:00",
-            "latest_available_at": "2013-06-16T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -5395,8 +5359,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T00:00:00+00:00",
-            "latest_available_at": "2013-06-16T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -5588,8 +5550,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T00:00:00+00:00",
-            "latest_available_at": "2013-06-16T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -6032,8 +5992,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T00:00:00+00:00",
-            "latest_available_at": "2013-06-16T00:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -6163,14 +6121,14 @@
         "population": null,
         "data_adequacy": 0.45
       },
-      "run_id": "17b745c5-3b2b-400e-9e33-8017133fd6f4",
+      "run_id": "d5779612-6835-4717-94ae-37cd72b26726",
       "step": 24,
       "running": false,
       "storage": "MEMORY DEMO \u2014 PostGIS unavailable"
     },
     {
       "as_of": "2013-06-16T06:00:00+00:00",
-      "computed_at": "2026-09-12T07:45:12.167175+00:00",
+      "computed_at": "2026-09-11T19:55:45.353766+00:00",
       "mode": "REPLAY",
       "synthetic": true,
       "model_status": "MOCKED",
@@ -6255,8 +6213,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T06:00:00+00:00",
-            "latest_available_at": "2013-06-16T06:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -6607,8 +6563,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T06:00:00+00:00",
-            "latest_available_at": "2013-06-16T06:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -6926,8 +6880,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T06:00:00+00:00",
-            "latest_available_at": "2013-06-16T06:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -7200,8 +7152,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T06:00:00+00:00",
-            "latest_available_at": "2013-06-16T06:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -7451,8 +7401,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T06:00:00+00:00",
-            "latest_available_at": "2013-06-16T06:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -7895,8 +7843,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T06:00:00+00:00",
-            "latest_available_at": "2013-06-16T06:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -8088,8 +8034,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T06:00:00+00:00",
-            "latest_available_at": "2013-06-16T06:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -8219,14 +8163,14 @@
         "population": null,
         "data_adequacy": 0.45
       },
-      "run_id": "5ad4ee23-f9ee-4a4d-88cc-4b5d1ccd0957",
+      "run_id": "315dc150-6333-46b7-abc3-85bcf6d20cfb",
       "step": 30,
       "running": false,
       "storage": "MEMORY DEMO \u2014 PostGIS unavailable"
     },
     {
       "as_of": "2013-06-16T18:00:00+00:00",
-      "computed_at": "2026-09-12T07:45:12.509021+00:00",
+      "computed_at": "2026-09-11T19:55:45.601470+00:00",
       "mode": "REPLAY",
       "synthetic": true,
       "model_status": "MOCKED",
@@ -8311,8 +8255,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T18:00:00+00:00",
-            "latest_available_at": "2013-06-16T18:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -8755,8 +8697,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T18:00:00+00:00",
-            "latest_available_at": "2013-06-16T18:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -8945,8 +8885,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T18:00:00+00:00",
-            "latest_available_at": "2013-06-16T18:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -9264,8 +9202,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T18:00:00+00:00",
-            "latest_available_at": "2013-06-16T18:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -9616,8 +9552,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T18:00:00+00:00",
-            "latest_available_at": "2013-06-16T18:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -9809,8 +9743,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T18:00:00+00:00",
-            "latest_available_at": "2013-06-16T18:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -10083,8 +10015,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-16T18:00:00+00:00",
-            "latest_available_at": "2013-06-16T18:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -10275,14 +10205,14 @@
         "population": null,
         "data_adequacy": 0.45
       },
-      "run_id": "763e25a8-7433-4111-8c6c-c6dbfaedebb5",
+      "run_id": "d6f84b15-fa98-4611-a9ad-a854b23434f8",
       "step": 42,
       "running": false,
       "storage": "MEMORY DEMO \u2014 PostGIS unavailable"
     },
     {
       "as_of": "2013-06-17T12:00:00+00:00",
-      "computed_at": "2026-09-12T07:45:12.904871+00:00",
+      "computed_at": "2026-09-11T19:55:45.843014+00:00",
       "mode": "REPLAY",
       "synthetic": true,
       "model_status": "MOCKED",
@@ -10367,8 +10297,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T12:00:00+00:00",
-            "latest_available_at": "2013-06-17T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -10811,8 +10739,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T12:00:00+00:00",
-            "latest_available_at": "2013-06-17T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -11163,8 +11089,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T12:00:00+00:00",
-            "latest_available_at": "2013-06-17T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -11482,8 +11406,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T12:00:00+00:00",
-            "latest_available_at": "2013-06-17T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -11672,8 +11594,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T12:00:00+00:00",
-            "latest_available_at": "2013-06-17T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -11946,8 +11866,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T12:00:00+00:00",
-            "latest_available_at": "2013-06-17T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -12139,8 +12057,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T12:00:00+00:00",
-            "latest_available_at": "2013-06-17T12:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -12331,14 +12247,14 @@
         "population": null,
         "data_adequacy": 0.45
       },
-      "run_id": "ca7f4c15-9638-4d80-a2fa-e07185fa7fda",
+      "run_id": "c3167f78-fc31-4fdb-9c2c-e8ab27bd1072",
       "step": 60,
       "running": false,
       "storage": "MEMORY DEMO \u2014 PostGIS unavailable"
     },
     {
       "as_of": "2013-06-17T23:00:00+00:00",
-      "computed_at": "2026-09-12T07:45:13.285366+00:00",
+      "computed_at": "2026-09-11T19:55:46.081042+00:00",
       "mode": "REPLAY",
       "synthetic": true,
       "model_status": "MOCKED",
@@ -12423,8 +12339,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T23:00:00+00:00",
-            "latest_available_at": "2013-06-17T23:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -12867,8 +12781,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T23:00:00+00:00",
-            "latest_available_at": "2013-06-17T23:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -13219,8 +13131,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T23:00:00+00:00",
-            "latest_available_at": "2013-06-17T23:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -13538,8 +13448,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T23:00:00+00:00",
-            "latest_available_at": "2013-06-17T23:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -13812,8 +13720,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T23:00:00+00:00",
-            "latest_available_at": "2013-06-17T23:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -14063,8 +13969,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T23:00:00+00:00",
-            "latest_available_at": "2013-06-17T23:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -14253,8 +14157,6 @@
               "24": 1.0
             },
             "missing_features": [],
-            "latest_observed_at": "2013-06-17T23:00:00+00:00",
-            "latest_available_at": "2013-06-17T23:00:00+00:00",
             "rejected": 0,
             "stale": false,
             "no_data": false,
@@ -14387,7 +14289,7 @@
         "population": null,
         "data_adequacy": 0.45
       },
-      "run_id": "64ea4262-c448-4485-a9ed-488448298c2f",
+      "run_id": "52243d23-e1b8-469b-8175-14ef140e0f4c",
       "step": 71,
       "running": false,
       "storage": "MEMORY DEMO \u2014 PostGIS unavailable"
@@ -14395,7 +14297,7 @@
   ],
   "real_archive_context": {
     "as_of": "2013-06-16T06:00:00+00:00",
-    "computed_at": "2026-09-12T07:45:13.922512+00:00",
+    "computed_at": "2026-09-11T19:55:46.567096+00:00",
     "mode": "REPLAY",
     "synthetic": false,
     "model_status": "MOCKED",
@@ -14483,8 +14385,6 @@
             "water_level_m",
             "forecast_trend"
           ],
-          "latest_observed_at": "2013-06-16T06:00:00+00:00",
-          "latest_available_at": "2013-06-16T06:00:00+00:00",
           "rejected": 0,
           "stale": false,
           "no_data": false,
@@ -14675,7 +14575,7 @@
           {
             "feature": "water_level_m",
             "value": null,
-            "contribution_log_odds": 1.94917
+            "contribution_log_odds": 1.94916
           },
           {
             "feature": "soil_moisture",
@@ -14743,8 +14643,6 @@
             "water_level_m",
             "forecast_trend"
           ],
-          "latest_observed_at": null,
-          "latest_available_at": null,
           "rejected": 0,
           "stale": true,
           "no_data": true,
@@ -14954,7 +14852,7 @@
           {
             "feature": "water_level_m",
             "value": null,
-            "contribution_log_odds": 1.94917
+            "contribution_log_odds": 1.94916
           },
           {
             "feature": "rain_3h",
@@ -15022,8 +14920,6 @@
             "water_level_m",
             "forecast_trend"
           ],
-          "latest_observed_at": null,
-          "latest_available_at": null,
           "rejected": 0,
           "stale": true,
           "no_data": true,
@@ -15379,8 +15275,6 @@
             "water_level_m",
             "forecast_trend"
           ],
-          "latest_observed_at": null,
-          "latest_available_at": null,
           "rejected": 0,
           "stale": true,
           "no_data": true,
@@ -15635,7 +15529,7 @@
           {
             "feature": "water_level_m",
             "value": null,
-            "contribution_log_odds": 1.94917
+            "contribution_log_odds": 1.94916
           },
           {
             "feature": "soil_moisture",
@@ -15703,8 +15597,6 @@
             "water_level_m",
             "forecast_trend"
           ],
-          "latest_observed_at": null,
-          "latest_available_at": null,
           "rejected": 0,
           "stale": true,
           "no_data": true,
@@ -15901,8 +15793,6 @@
             "water_level_m",
             "forecast_trend"
           ],
-          "latest_observed_at": null,
-          "latest_available_at": null,
           "rejected": 0,
           "stale": true,
           "no_data": true,
@@ -16350,8 +16240,6 @@
             "water_level_m",
             "forecast_trend"
           ],
-          "latest_observed_at": null,
-          "latest_available_at": null,
           "rejected": 0,
           "stale": true,
           "no_data": true,

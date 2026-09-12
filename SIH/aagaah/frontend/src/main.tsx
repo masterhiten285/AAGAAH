@@ -191,8 +191,8 @@ const SPATIAL_EXTENT_MAP: Record<string, SpatialExtent> = {
 function App() {
   const queryClient = useQueryClient()
   const [activeNav, setActiveNav] = useState<ActiveNav>('situation')
-  const [operationalMode, setOperationalMode] = useState<'live' | 'replay'>('live')
-  const [geoPreset, setGeoPreset] = useState<GeoPreset>('india')
+  const [operationalMode, setOperationalMode] = useState<'live' | 'replay'>('replay')
+  const [geoPreset, setGeoPreset] = useState<GeoPreset>('mandakini')
   const [selectedLocation, setSelectedLocation] = useState('kedarnath')
   const [token] = useState(() => sessionStorage.getItem('aagaah-control-token') || 'local-demo-only')
   const [seek, setSeek] = useState(30)
@@ -306,7 +306,7 @@ function App() {
       send('seek', 30) // June 16 03:00 UTC (10.5h before moraine breach)
     } else {
       // Dehradun 2025 Case Study
-      setOperationalMode('live')
+      setOperationalMode('replay')
       setActiveNav('events')
       setGeoPreset('uttarakhand')
       const dehradunEvent = NATIONAL_EVENTS.find(e => e.id === 'dehradun-2025')
@@ -325,9 +325,9 @@ function App() {
 
   // Exit Replay Mode back to Live Situation
   const exitReplayMode = () => {
-    setOperationalMode('live')
+    setOperationalMode('replay')
     setActiveNav('situation')
-    setGeoPreset('india')
+    setGeoPreset('mandakini')
     setSelectedEvent(null)
   }
 
@@ -343,7 +343,14 @@ function App() {
           ==================================================================== */}
       <aside className="sidebar">
         <div className="brand-header">
-          <Mountain size={22} className="text-[#174A7E]" />
+          <img
+            src="/logo.png"
+            alt="AAGAAH Logo"
+            className="h-10 w-auto object-contain"
+            onError={e => {
+              ;(e.target as HTMLElement).style.display = 'none'
+            }}
+          />
           <div className="brand-title">
             <strong>AAGAAH · आगाह</strong>
             <span>DISASTER INTELLIGENCE</span>
@@ -358,7 +365,6 @@ function App() {
               <button
                 onClick={() => {
                   setActiveNav('situation')
-                  if (operationalMode === 'replay') setOperationalMode('live')
                 }}
                 className={`nav-item ${activeNav === 'situation' ? 'active' : ''}`}
                 title="What is happening and where? Real-time operational situational awareness"
@@ -454,6 +460,14 @@ function App() {
         <header className={`topbar ${operationalMode === 'replay' ? 'replay-active' : ''}`}>
           <div className="topbar-left">
             <div className="flex items-center gap-3">
+              <img
+                src="/logo.png"
+                alt="AAGAAH Logo"
+                className="h-7 w-auto object-contain"
+                onError={e => {
+                  ;(e.target as HTMLElement).style.display = 'none'
+                }}
+              />
               <h1 className="text-base font-extrabold text-white tracking-wide flex items-center gap-2">
                 AAGAAH · आगाह
               </h1>
