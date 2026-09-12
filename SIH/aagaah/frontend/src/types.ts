@@ -21,9 +21,29 @@ export interface LocationRisk {
   confidence_reasons: string[]
   features: Record<string, number | null>
   terrain: Record<string, number>
-  explanation: { feature: string; value: number | null; contribution_log_odds: number }[]
-  exposure: { counts: Record<string, number>; population: number | null; method: string; assets: { id: string; name: string; kind: string }[] }
-  quality: { stale: boolean; age_hours: number; coverage: Record<string, number>; missing_features: string[]; sources: string[]; statuses: string[]; synthetic: boolean }
+  explanation: {
+    feature: string
+    value: number | null
+    contribution_log_odds: number
+  }[]
+  exposure: {
+    counts: Record<string, number>
+    population: number | null
+    method: string
+    assets: { id: string; name: string; kind: string }[]
+  }
+  quality: {
+    stale: boolean
+    no_data: boolean
+    age_hours: number
+    latest_observed_at?: string | null
+    latest_available_at?: string | null
+    coverage: Record<string, number>
+    missing_features: string[]
+    sources: string[]
+    statuses: string[]
+    synthetic: boolean
+  }
 }
 
 export interface Snapshot {
@@ -38,7 +58,13 @@ export interface Snapshot {
   locations: LocationRisk[]
   disclaimer: string
   pipeline_stages: string[]
-  summary: { locations: number; needs_review: number; highest_risk: number; data_adequacy: number; population: null }
+  summary: {
+    locations: number
+    needs_review: number
+    highest_risk: number
+    data_adequacy: number
+    population: null
+  }
 }
 
 export interface Pilot {
@@ -72,71 +98,43 @@ export interface Source {
   reliability: string
   fallback: string
   references: string[]
+  usage_type: string
+  usage_status: string
+  retrieved_at: string | null
+  last_observation_at: string | null
+}
+
+export interface ModelCard {
+  id: string
+  training: string
+  seed: number
+  features: string[]
+  target: string
+  validation: string
+  folds: {
+    training_rows: number
+    held_out_rows: number
+    groups_disjoint: boolean
+  }[]
+  performance_metrics: Record<string, number | null> | null
+  historical_validation: boolean
+  risk_semantics: string
+  data_sha256: string
+}
+
+export interface Health {
+  status: string
+  storage: string
+  redis: string
+  model_status: string
+  scientific_readiness: boolean
+  live_monitoring: boolean
+  replay_scheduler: boolean
+  replay_interval_seconds: number
 }
 
 export interface HistoryPoint {
   as_of: string
   risk_score: number | null
   rain_1h: number | null
-}
-
-export interface Incident {
-  id: string
-  location_id: string
-  location_name: string
-  title: string
-  severity: 'P1_CRITICAL' | 'P2_HIGH' | 'P3_MEDIUM' | 'P4_LOW'
-  status: 'NEW' | 'UNDER_REVIEW' | 'VERIFIED' | 'MONITORING' | 'RESOLVED'
-  summary: string
-  operator_notes: string
-  reported_by: string
-  created_at: string
-  updated_at: string
-  audit_log: { timestamp: string; action: string; actor: string; details: string }[]
-}
-
-export interface Watershed {
-  id: string
-  name: string
-  state: string
-  coverage_status: string
-  is_active_pilot: boolean
-  area_km2: number
-  elevation_range_m: [number, number]
-  primary_reach: string
-  center: [number, number]
-  zoom: number
-  description: string
-}
-
-export interface CaseStudy {
-  id: string
-  title: string
-  date_range: string
-  location: string
-  coordinates: [number, number]
-  severity: string
-  provenance: string
-  summary: string
-  timeline: { time: string; event: string }[]
-  what_aagaah_would_monitor: string[]
-  scientific_disclaimer: string
-}
-
-export interface SituationFeedItem {
-  id: string
-  timestamp: string
-  title: string
-  source: string
-  source_url: string
-  status: string
-  region: string
-  summary: string
-  implication: string
-}
-
-export interface SituationSummaryResponse {
-  location_id: string
-  briefing_markdown: string
-  as_of: string
 }

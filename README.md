@@ -1,226 +1,124 @@
-# AAGAAH (आगाह) 🌊🏔️
-### AI-Driven Real-Time Mountain Hydrology & Flash Flood Early-Warning System
+# AAGAAH (आगाह)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![React 19](https://img.shields.io/badge/React-19.0-61dafb.svg)](https://react.dev/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg)](https://fastapi.tiangolo.com/)
-[![SIH 2026](https://img.shields.io/badge/Smart%20India%20Hackathon-PS%2026192-orange.svg)](https://www.sih.gov.in/)
+**Flash Flood Intelligence & Early Warning System — decision-support prototype**
+SIH 2026 · Problem Statement 26192 · Pilot: Mandakini Basin, Uttarakhand
 
-> **AAGAAH (आगाह)** is an enterprise-grade hydrological intelligence platform engineered for steep alpine terrain, specifically calibrated for the **Mandakini River Basin (Kedarnath to Rudraprayag, Uttarakhand, India)**. Designed to prevent catastrophic loss of human life and critical infrastructure, AAGAAH shifts disaster response from *reactive aftermath triage* to *anticipatory, explainable, corridor-specific intervention*.
+## Problem
 
----
+Authorities need to connect upstream environmental conditions to specific downstream places that deserve verification. Mountain rainfall varies sharply; observations can be incomplete or late; river connectivity and the location of crossings and settlements matter. A rainfall value alone cannot answer which location needs attention first.
 
-## 📌 Executive Summary & Pitch
+## Solution
 
-Traditional flood monitoring relies on static water level gauges positioned far downstream on major rivers. In high-altitude Himalayan catchments, **cloudbursts, glacial lake outbursts (GLOFs), and intense orographic precipitation** create deadly flash flood surges that travel at speeds exceeding 15–20 m/s—striking pilgrim trails and settlements within minutes long before downstream gauges register anomalous river swell.
+AAGAAH brings environmental features, an explainable hazard model, river-network screening and mapped asset exposure into one authority dashboard. It is a decision-support and last-mile intelligence layer for authorized authorities, with human verification and local protocols governing action.
 
-**AAGAAH solves this through 4 Integrated Decision Pillars:**
-1. **Physics-Guided Hazard Prediction**: Machine learning models (Calibrated Ensembles & Gradient Boosted Regressors) trained on digital elevation models (DEM), upstream catchment runoff accumulation, antecedent soil saturation, and multi-temporal rainfall intensity.
-2. **Transparent Data Adequacy (Confidence Engine)**: Discarding the dangerous fallacy that ML models are always confident, AAGAAH computes a dynamic $[0, 100\%]$ **Data Adequacy Score** combining sensor telemetry freshness, feature completeness, sensor spatial attenuation, and base model reliability.
-3. **150m High-Hazard Corridor Exposure Assessment**: Direct spatial intersection of flood hazard envelopes with active vulnerable assets (pilgrim density, bridges, NH-107 arterial roads, medical camps, helipads).
-4. **Actionable Priority Triage (P1–P4)**: Synthesis of Hazard $\times$ Exposure $\times$ Confidence into prioritized civil administration action advisories with deterministic standard operating procedures (SOPs).
+**Current implementation is an explicitly labeled synthetic replay demonstration.** Live monitoring is not connected. The trained model uses artificial targets; its output is a demo hazard score, not a validated probability of flooding. Historical accuracy and warning lead time are not established.
 
----
-
-## 🏛️ System Architecture
+## How it works
 
 ```mermaid
-flowchart TD
-    subgraph DataIngestion ["1. Dynamic Telemetry and Ingestion"]
-        A1[IMD / AWS Weather Stations] --> Ingest
-        A2[Soil Moisture Sensors] --> Ingest
-        A3[ASTER / Copernicus 30m DEM] --> Catchment
-        A4[OpenStreetMap / District Exposure] --> Assets
-        Ingest[Telemetry Ingestion Pipeline]
-    end
-
-    subgraph FeaturePipeline ["2. Feature Engineering and Hydrological Routing"]
-        Ingest --> F1[Runoff Coefficient and Infiltration]
-        Catchment --> F2[Catchment Area and Topographic Wetness Index]
-        F1 & F2 --> DAG[Hydrological Directed Acyclic Graph - 120km DAG]
-        DAG --> Lag[Lagged Upstream Inflow and Downstream Routing]
-    end
-
-    subgraph IntelligenceCore ["3. AI Hazard and Explainability Engine"]
-        Lag --> Model[Calibrated ML Hazard Classifier]
-        Model --> HazardScore[Hazard Score 0-100%]
-        Model --> SHAP[TreeSHAP Local Attribution]
-        Ingest --> Adequacy[Confidence and Telemetry Quality Engine]
-    end
-
-    subgraph DecisionLayer ["4. Corridor Exposure and Operational Triage"]
-        Assets --> GeoFilter[150m High-Hazard Corridor Buffer]
-        HazardScore & GeoFilter --> Exposure[Human and Infrastructure Impact]
-        HazardScore & Exposure & Adequacy --> PriorityEngine[P1-P4 Action Triage]
-    end
-
-    subgraph Presentation ["5. Mission Control C2 Dashboard"]
-        PriorityEngine & SHAP --> API[FastAPI High-Throughput REST Engine]
-        API --> UI[React 19 + TypeScript + Leaflet C2 Terminal]
-    end
+flowchart LR
+  A[Hourly replay inputs] --> B[Quality checks and causal features]
+  B --> C[Local AI demo hazard score]
+  C --> D[SHAP explanation]
+  C --> E[River-network downstream screening]
+  F[Cached terrain and OSM assets] --> E
+  E --> G[Candidate exposure]
+  G --> H[Priority ranking]
+  B --> I[Data adequacy]
+  I --> H
+  H --> J[Authority verification]
+  B --> K[Independent anomaly flag]
 ```
 
----
+Keep four concepts separate: **hazard** is a local model output; **data adequacy** describes evidence freshness/completeness; **exposure** counts mapped candidate assets; **priority** orders locations for review. An anomaly means unusual conditions, not a confirmed flood.
 
-## 🔬 Scientific & Algorithmic Foundations
+Read the [pre-change audit and architecture map](docs/ARCHITECTURE.md), [AI explanation](docs/ML_EXPLAINABILITY.md) and [GIS/risk methodology](docs/GIS_RISK.md).
 
-### 1. Data Adequacy & Confidence Scoring
-Early warning systems operating on mountain sensor grids experience frequent telemetry loss, radio silence, and sensor drift. A high-hazard alert based on stale 12-hour-old data must not be treated the same as one supported by 5-minute radar telemetry.
+## What is unique
 
-The Confidence Score $C_i$ for gauge/catchment $i$ is calculated as:
-$$\text{Confidence}_i = \text{BaseCap} \times \mathcal{F}(\Delta t) \times \mathcal{C}_{features} \times \mathcal{D}_{spatial}$$
+The prototype connects explainable local scores to downstream river geography, candidate assets and an explicit review queue. It retains provenance, missing inputs and low-adequacy review flags. The judge can trace a result from data to AI to GIS to human verification without reading the source code. This describes the implementation, not a proven comparative performance advantage.
 
-- **Base Calibration ($\text{BaseCap} = 0.95$)**: Intrinsic out-of-sample reliability upper bound.
-- **Freshness ($\mathcal{F}(\Delta t)$)**: Exponential decay $\exp(-\lambda \Delta t)$ penalizing stale sensor reporting.
-- **Completeness ($\mathcal{C}_{features}$)**: Proportion of un-imputed, non-missing core hydrological features ($R_{1h}, R_{3h}, R_{24h}, \theta_{soil}, Q_{upstream}$).
-- **Spatial Proximity Attenuation ($\mathcal{D}_{spatial}$)**: Inverse distance weighting from physical ground-truth observation nodes.
+## Demo
 
-### 2. Local Model Explainability via TreeSHAP
-Disaster management officials (NDRF, SDRF, District Magistrates) reject black-box AI predictions. AAGAAH incorporates local **TreeSHAP (SHapley Additive exPlanations)** to break down every prediction into additive physical components:
-$$\hat{y}_i = \phi_0 + \sum_{j=1}^{M} \phi_j(x_i)$$
-The C2 Command Dashboard visualizes exact feature impact bars:
-- 🔴 **Positive $\phi_j$**: Factor escalating hazard (e.g., $+28\%$ due to $R_{3h} > 85\text{ mm/hr}$ cloudburst intensity).
-- 🟢 **Negative $\phi_j$**: Mitigating factor (e.g., $-12\%$ due to dry initial antecedent soil condition).
+Open the Mandakini map, choose **Start judge demo**, then **Open synthetic storm at hour 30**. Inspect the four evidence cards, SHAP drivers, connected locations and matched assets. Review **Data Sources & Freshness** and **Model & Validation**, then export a labeled authority review draft. **Live monitoring** explicitly shows unavailable current conditions.
 
-### 3. Topological River DAG Network Routing
-Water in mountain river valleys moves strictly along gravity-driven hydrological flow paths. AAGAAH models the **Mandakini River Network** as a Directed Acyclic Graph (DAG) with an attenuation and travel velocity parameterization:
-$$\text{Flow}(v) = \text{LocalRunoff}(v) + \sum_{u \in \text{Parents}(v)} \alpha_{u,v} \cdot \text{Flow}(u, t - \Delta t_{u,v})$$
-This enables upstream surge events at **Kedarnath (3,583m)** and **Rambara (2,740m)** to generate predictive downstream flood propagation alerts for **Gaurikund, Sonprayag, Phata, Guptkashi, Tilwara, and Rudraprayag** with calibrated lead times of 45 to 180 minutes.
+The replay uses 2013 dates as narrative context; it does not reconstruct the real flood. The separate cached reanalysis adapter supplies one Kedarnath grid point and is exercised by the replay-check script. It is not the default dashboard input. See the [3-minute script, 30-second explanation and judge Q&A](docs/DEMO_GUIDE.md).
 
-### 4. Zero-Leakage 2013 Kedarnath Replay Validation
-To prove resilience against once-in-a-century catastrophic events, the system was validated against the reconstructed hydrological timeline of the **June 2013 Uttarakhand Disasters**:
-- Trained exclusively on pre-disaster meteorological baselines and historical seasonal precipitation.
-- Evaluated on the out-of-sample June 16–17, 2013 multi-day torrential deluge.
-- The model successfully triggered critical **P1 Flash Flood Alerts 92 minutes prior to peak debris torrent formation**, with upstream antecedent moisture and 3-hour precipitation contributing over $78\%$ of the SHAP attribution weight.
+### Local setup (PowerShell, from this repository root)
 
----
+Python 3.11+ and Node/npm are needed. Start with the existing processed data under `SIH/aagaah/data/processed`; do not rerun downloads merely to view the demo.
 
-## 💻 Tech Stack
-
-### Backend & AI Intelligence
-- **Language**: Python 3.10+
-- **API Framework**: FastAPI, Uvicorn (Asynchronous non-blocking architecture)
-- **Machine Learning**: Scikit-Learn, XGBoost, LightGBM
-- **Explainability**: SHAP (TreeSHAP C-optimized explainer)
-- **Spatial & Hydrological Processing**: NetworkX (Topological DAGs), NumPy, Pandas, GeoPandas, SciPy
-
-### Mission Control Frontend
-- **Framework**: React 19, TypeScript
-- **Bundler & Dev Server**: Vite 6
-- **Geospatial Mapping**: Leaflet, React-Leaflet, CartoDB Dark Matter tiles
-- **Styling & UI**: Handcrafted High-Performance Cyber-Industrial CSS with Glassmorphism, CSS Custom Properties, and Mobile-Responsive sliding telemetry drawers
-- **Icons**: Lucide React
-
----
-
-## 📂 Repository Structure
-
-```
-AAGAAH/
-├── aagaah/                                # Core Hydrology & AI Library
-│   ├── data/                              # Hydrological data loaders & feature prep
-│   ├── evaluation/                        # Validation metrics & out-of-sample tests
-│   ├── features/                          # Hydrological feature engineering
-│   ├── models/                            # Model training, inference & checkpoints
-│   ├── routing/                           # 120km Mandakini Topological River DAG
-│   └── tests/                             # Unit and integration test suite
-├── backend-api/                           # Production FastAPI Application
-│   ├── aagaah/
-│   │   ├── main.py                        # REST endpoints & CORS configuration
-│   │   ├── pipeline_service.py            # Live telemetry inference engine
-│   │   ├── exposure.py                    # 150m corridor asset intersection
-│   │   └── mock_replay.py                 # Out-of-sample replay engine
-│   └── data/                              # Production weights, baseline stats & GeoJSON
-├── frontend/                              # Mission Control C2 Web Application
-│   ├── src/
-│   │   ├── main.tsx                       # Dashboard UI, Telemetry Dock & Dossier
-│   │   ├── style.css                      # Modern dark-mode styling system
-│   │   └── types.ts                       # Strong TypeScript interfaces
-│   ├── package.json
-│   ├── vite.config.ts
-│   └── index.html
-├── .gitignore                             # Clean repository exclusions
-└── README.md                              # Institutional Documentation
-```
-
----
-
-## 🚀 Installation & Local Setup
-
-### Prerequisites
-- **Python 3.10+**
-- **Node.js 18+ & npm**
-- **Git**
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/masterhiten285/AAGAAH.git
-cd AAGAAH
-```
-
-### 2. Backend Setup
-```bash
-# Navigate to backend and create virtual environment
+```powershell
 python -m venv .venv
-
-# Activate virtual environment
-# On Windows (PowerShell):
-.venv\Scripts\Activate.ps1
-# On Linux/macOS:
-source .venv/bin/activate
-
-# Install dependencies
-pip install -r backend-api/requirements.txt   # or pip install fastapi uvicorn shap scikit-learn numpy pandas networkx
+.\.venv\Scripts\python.exe -m pip install -r SIH/aagaah/requirements.txt
+cd SIH/aagaah
+$env:AAGAAH_DEMO_MEMORY='true'
+$env:AAGAAH_SCHEDULE='true'
+$env:AAGAAH_INTERVAL_SECONDS='8'
+..\..\.venv\Scripts\python.exe -m uvicorn aagaah.main:app --app-dir backend-api --host 127.0.0.1 --port 8000
 ```
 
-### 3. Launch the Backend Server
-```bash
-# Enable in-memory demo mode with active 15-second simulation ticks
-$env:AAGAAH_DEMO_MEMORY="true"
-$env:AAGAAH_SCHEDULE="true"
-$env:AAGAAH_INTERVAL_SECONDS="15"
+In another terminal, from the repository root:
 
-python -m uvicorn aagaah.main:app --app-dir backend-api --host 127.0.0.1 --port 8000 --reload
-```
-The FastAPI swagger docs will be live at `http://127.0.0.1:8000/docs`.
-
-### 4. Frontend Setup & Launch
-```bash
-# Open a new terminal in the frontend directory
-cd frontend
-
-# Install dependencies
-npm install
-
-# Start Vite development server
+```powershell
+cd SIH/aagaah/frontend
+npm ci
 npm run dev
 ```
-Open your browser at `http://localhost:5173` to access the Mission Control Early Warning Terminal.
 
----
+Open [the dashboard](http://127.0.0.1:5173) and [API documentation](http://127.0.0.1:8000/docs). The API generates deterministic synthetic model artifacts if absent. Memory-demo storage is nonpersistent and never selected automatically after a database failure.
 
-## 📡 API Reference
+If a port is already occupied, use another backend port and set `AAGAAH_API_PROXY` for Vite:
 
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/health` | System health check and telemetry heartbeat |
-| `GET` | `/status` | High-level basin summary: worst priority, stations active, P1 counts |
-| `GET` | `/predictions/latest` | Comprehensive station predictions with Hazard, Exposure, Confidence & SHAP |
-| `GET` | `/network/flow` | Topological Mandakini River DAG node and edge routing state |
-| `GET` | `/alerts/active` | Filtered list of P1 and P2 urgent civil protection advisories |
-| `POST` | `/simulate/tick` | Advance simulated storm front by $\Delta t$ minutes |
+```powershell
+$env:AAGAAH_API_PROXY='http://127.0.0.1:8011'
+node node_modules/vite/bin/vite.js --host 127.0.0.1 --port 5181 --strictPort
+```
 
----
+Change the replay token with `AAGAAH_CONTROL_TOKEN`, then enter the same value in the dashboard's **Replay control token** section. Replay mutations affect shared server state. Without a scheduler or worker, use step/seek; Play alone does not advance time.
 
-## 👥 Team & SIH Problem Statement
+### Persistent deployment configuration
 
-- **Initiative**: Smart India Hackathon 2026
-- **Problem Statement ID**: 26192
-- **Domain**: Disaster Management, Hydrology, Alpine Safety & AI
-- **Repository**: [https://github.com/masterhiten285/AAGAAH](https://github.com/masterhiten285/AAGAAH)
+The existing Compose stack uses PostGIS, Redis, FastAPI, a replay-tick worker and nginx. From `SIH/aagaah`, `docker compose up --build` exposes the UI on port 8080 and API on port 8000. It runs Alembic migration and seeds cached geometry. This is a configured prototype deployment, not a claim of operational readiness. Do not enable both the separate replay worker and API scheduler for the same deployment.
 
----
+## Technology
 
-## 📜 License
-Distributed under the MIT License. See `LICENSE` for more information.
+React + TypeScript + React Query + MapLibre; FastAPI + Pydantic; XGBoost + Isolation Forest + SHAP; Rasterio + Shapely + PyProj + NetworkX; PostgreSQL/PostGIS + optional Redis; pytest + Playwright. Existing model, formula, storage adapters and API defaults are retained.
+
+| API | Purpose |
+|---|---|
+| GET `/health` | Actual storage/cache status, model readiness and API scheduler configuration |
+| GET `/pilot`, `/sources`, `/model-card` | Pilot metadata, source usage/probes, loaded model evidence |
+| GET `/dashboard` or `?mode=replay` | Committed replay snapshot |
+| GET `/dashboard?mode=live` | Explicit HTTP 503: live monitoring not connected |
+| GET `/map/{layer}` | `catchments`, `rivers`, `flowpaths`, `infrastructure`, `screening-corridor` |
+| GET `/map/terrain.png` | Cached hillshade |
+| GET `/locations/{id}/history` | Recorded replay frames through the active replay time |
+| POST `/predict` | Shared causal pipeline on supplied readings; does not persist a live dashboard |
+| POST `/replay/control` | Token-protected play, pause, step, seek or reset |
+| POST `/internal/tick` | Token-protected scheduled replay tick |
+
+There are no implemented incident-dispatch, government warning or situation-summary endpoints. Review-draft export is a local browser download.
+
+## Validation
+
+The model card contains **no historical performance metrics**. ROC-AUC, PR-AUC, Brier score, F1, precision and recall remain **not established**. Three grouped synthetic smoke checks demonstrate pipeline mechanics; they are not event-level flood validation. See [validation methodology and test instructions](docs/VALIDATION.md).
+
+```powershell
+# From SIH/aagaah
+..\..\.venv\Scripts\python.exe -m pytest -q
+..\..\.venv\Scripts\python.exe scripts/replay_check.py
+cd frontend
+npm run build
+npm run test:e2e
+```
+
+Browser tests need a running API with a replay scheduler and Vite proxy. Set `AAGAAH_UI_URL` if the UI is not on port 5173. Real PostGIS integration requires `AAGAAH_TEST_DATABASE_URL` pointing to a migrated test database; it is skipped otherwise. See [change and verification record](docs/IMPLEMENTATION_REPORT.md).
+
+## Limitations
+
+No connected live monitoring, real flood-trained model, calibrated probabilities, validated warning lead time, hydraulic simulation or autonomous evacuation. GIS uses 120m terrain analysis and **illustrative per-edge attenuation**, not physical distance decay. The **150m corridor is candidate exposure screening, never an inundation boundary**. OSM completeness is unknown; roads are feature counts, population is unknown and cached infrastructure is not a 2013 inventory. See [all limitations](docs/LIMITATIONS.md) and [data-source usage](docs/DATA_SOURCES.md).
+
+## Future scope
+
+Connect authorized weather/gauge feeds with explicit availability times; assemble independent flood and non-flood labels; perform event/time/basin-held-out evaluation and calibration; validate terrain and asset inventories; assess mechanism-specific model needs; co-design review and escalation workflows with authorities. These are planned work, not operational integrations. AAGAAH does not replace IMD, NDRF or SAsiaFFGS.

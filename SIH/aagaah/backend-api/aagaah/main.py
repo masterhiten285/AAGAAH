@@ -5,6 +5,7 @@ import uuid
 from contextlib import asynccontextmanager
 from datetime import timedelta
 from pathlib import Path
+from typing import Literal
 from fastapi import FastAPI, Depends, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
@@ -14,7 +15,8 @@ from .config import ROOT, Settings
 from .contracts import PredictRequest, ReplayControl
 from .providers import SyntheticReplay, START
 from .model import Models
-from .spatial import LocalSpatial
+from .spatial import LocalSpatial, screening_corridor
+from .source_catalog import source_catalog
 from .db import MemoryRepository, PostgresRepository, PostGISSpatial
 from .pipeline import run_pipeline
 
@@ -82,19 +84,23 @@ def create_app(settings: Settings | None = None):
             try: app.state.cache.ping(); cache='ready'
             except redis.RedisError: cache='unavailable; database remains authoritative'
         return {'status':'demo' if settings.demo_memory else 'ready','storage':app.state.repo.mode,
-                'redis':cache,'model_status':'MOCKED','scientific_readiness':False}
+                'redis':cache,'model_status':'MOCKED','scientific_readiness':False,
+                'live_monitoring':False,'replay_scheduler':settings.schedule,
+                'replay_interval_seconds':settings.interval_seconds}
 
     @app.get('/pilot')
     def pilot(): return app.state.pilot
 
     @app.get('/sources')
-    def sources(): return json.loads((ROOT/'data/source-registry.json').read_text(encoding='utf8'))
+    def sources(): return source_catalog()
 
     @app.get('/model-card')
     def model_card(): return app.state.models.card
 
     @app.get('/dashboard')
-    def dashboard():
+    def dashboard(mode: Literal['replay', 'live'] = 'replay'):
+        if mode == 'live':
+            raise HTTPException(503,'Live monitoring is not connected. Use replay for the labeled demonstration.')
         # Read committed run ID before using Redis: a failed cache invalidation cannot serve an old run.
         state=app.state.repo.load(); snapshot=state['snapshot']
         cache=app.state.cache
@@ -112,6 +118,7 @@ def create_app(settings: Settings | None = None):
 
     @app.get('/map/{layer}')
     def layer(layer: str):
+        if layer == 'screening-corridor': return screening_corridor()
         if layer not in ('catchments','rivers','flowpaths','infrastructure'): raise HTTPException(404,'Unknown map layer')
         return json.loads((ROOT/f'data/processed/{layer}.geojson').read_text(encoding='utf8'))
 
