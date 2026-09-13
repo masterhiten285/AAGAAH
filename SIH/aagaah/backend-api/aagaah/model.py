@@ -30,6 +30,61 @@ def training_data():
     labels = (severity + rng.normal(0,.35,n) > 0).astype(int)
     return data, labels, np.repeat(np.arange(120),20)
 
+def fetch_or_generate_dataset(exclude_year: int | None = None):
+    """Returns (X, y, groups, source) for reproducible training & verification."""
+    rng = np.random.default_rng(2026)
+    years = [2013, 2019, 2023]
+    if exclude_year is not None:
+        years = [y for y in years if y != exclude_year]
+    
+    loc_names = ['kedarnath', 'gaurikund', 'sonprayag', 'guptkashi', 'chandrapuri', 'agastmuni', 'rudraprayag']
+    n_per_year_loc = 100
+    
+    all_X = []
+    all_y = []
+    all_groups = []
+    
+    for yr in years:
+        for loc in loc_names:
+            n = n_per_year_loc
+            rain = rng.gamma(1.6, 8, n)
+            rain3 = rain + rng.gamma(2, 8, n)
+            rain6 = rain3 + rng.gamma(3, 8, n)
+            rain24 = rain6 + rng.gamma(6, 9, n)
+            soil = rng.uniform(.1, 1, n)
+            level = rng.uniform(.2, 6, n)
+            rate_of_rise = rng.uniform(-5, 15, n)
+            slope = rng.uniform(5, 45, n)
+            elev = rng.uniform(600, 3600, n)
+            up_area = rng.uniform(40, 1700, n)
+            riv_dist = rng.uniform(10, 1500, n)
+            
+            df = pd.DataFrame({
+                'rain_1h': rain,
+                'rain_3h': rain3,
+                'rain_6h': rain6,
+                'rain_24h': rain24,
+                'soil_moisture': soil,
+                'water_level_m': level,
+                'forecast_trend': rate_of_rise,
+                'slope_deg': slope,
+                'elevation_m': elev,
+                'river_distance_m': riv_dist,
+                'upstream_area_km2': up_area
+            })[FEATURES]
+            
+            severity = .045*rain + .018*rain3 + .007*rain24 + 1.5*soil + .35*level - 4.6
+            labels = (severity + rng.normal(0, .35, n) > 0).astype(int)
+            
+            all_X.append(df)
+            all_y.append(labels)
+            all_groups.extend([f"{yr}_{loc}"] * n)
+            
+    X = pd.concat(all_X, ignore_index=True)
+    y = np.concatenate(all_y)
+    groups = np.array(all_groups)
+    return X, y, groups, "synthetic_reproducible_generator"
+
 def classifier():
     return XGBClassifier(n_estimators=90, max_depth=3, learning_rate=.07,
         subsample=1, colsample_bytree=1, random_state=2026, n_jobs=2,

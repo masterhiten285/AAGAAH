@@ -17,6 +17,10 @@ from .model import Models
 from .spatial import LocalSpatial
 from .db import MemoryRepository, PostgresRepository, PostGISSpatial
 from .pipeline import run_pipeline
+from .watersheds import get_watersheds
+from .incidents import INCIDENT_STORE, IncidentCreate, IncidentUpdate
+from .events import get_case_studies, get_situation_feed
+from .summary import generate_situation_briefing
 
 logger=logging.getLogger('aagaah')
 
@@ -143,6 +147,47 @@ def create_app(settings: Settings | None = None):
 
     @app.post('/internal/tick',dependencies=[Depends(authorize)])
     def scheduled_tick(): return tick()
+
+    @app.get('/api/v1/watersheds')
+    def watersheds():
+        return get_watersheds()
+
+    @app.get('/api/v1/incidents')
+    def list_incidents():
+        return INCIDENT_STORE.list()
+
+    @app.post('/api/v1/incidents')
+    def create_incident(payload: IncidentCreate):
+        return INCIDENT_STORE.create(payload)
+
+    @app.patch('/api/v1/incidents/{incident_id}')
+    def update_incident(incident_id: str, payload: IncidentUpdate):
+        rec = INCIDENT_STORE.update(incident_id, payload)
+        if not rec:
+            raise HTTPException(404, 'Incident not found')
+        return rec
+
+    @app.get('/api/v1/case-studies')
+    def case_studies():
+        return get_case_studies()
+
+    @app.get('/api/v1/situation-feed')
+    def situation_feed():
+        return get_situation_feed()
+
+    @app.get('/api/v1/situation-summary/{location_id}')
+    def situation_summary(location_id: str):
+        state = app.state.repo.load()
+        locations = state['snapshot']['locations']
+        loc = next((l for l in locations if l['id'] == location_id), None)
+        if not loc:
+            raise HTTPException(404, 'Location not found in active snapshot')
+        md = generate_situation_briefing(loc, app.state.pilot, state['snapshot']['as_of'])
+        return {
+            'location_id': location_id,
+            'as_of': state['snapshot']['as_of'],
+            'briefing_markdown': md
+        }
 
     return app
 

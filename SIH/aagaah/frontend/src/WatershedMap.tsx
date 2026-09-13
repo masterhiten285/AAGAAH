@@ -75,7 +75,7 @@ export const NATIONAL_EVENTS: NationalEvent[] = [
     state: 'Himachal Pradesh',
     coords: [76.93, 31.70],
     severity: 'WARNING',
-    date: 'Monsoon Telemetry',
+    date: 'Monsoon Incident Archive',
     type: 'River Surge',
     source: 'HP SDMA Advisory',
     summary: 'Elevated antecedent saturation across steep catchment tributaries discharging into Beas River.',
@@ -88,7 +88,7 @@ export const NATIONAL_EVENTS: NationalEvent[] = [
     state: 'Jammu & Kashmir',
     coords: [75.76, 33.31],
     severity: 'WATCH',
-    date: 'Monsoon Advisory',
+    date: 'Monsoon Incident Archive',
     type: 'Cloudburst / Flash Flood',
     source: 'JK DMA Operational Bulletin',
     summary: 'Steep orographic rainfall triggering local debris flow warnings along upper gorge roads.',
@@ -101,7 +101,7 @@ export const NATIONAL_EVENTS: NationalEvent[] = [
     state: 'Sikkim',
     coords: [88.65, 27.60],
     severity: 'WATCH',
-    date: 'Himalayan Context',
+    date: 'Himalayan Regional Context',
     type: 'Glacial Surge',
     source: 'Sikkim SDMA Context',
     summary: 'High-altitude moraine lake runoff monitoring and glacial tributary gauge surveillance.',
@@ -114,7 +114,7 @@ export const NATIONAL_EVENTS: NationalEvent[] = [
     state: 'Uttarakhand',
     coords: [79.45, 30.55],
     severity: 'WATCH',
-    date: 'Monsoon Telemetry',
+    date: 'Regional Basin Context',
     type: 'River Surge',
     source: 'Uttarakhand SDMA Regional Context',
     summary: '11,050 km² major drainage network feeding Badrinath tributary system; upstream glacier-fed runoff monitoring.',
@@ -127,7 +127,7 @@ export const NATIONAL_EVENTS: NationalEvent[] = [
     state: 'Uttarakhand',
     coords: [78.60, 30.70],
     severity: 'WATCH',
-    date: 'Monsoon Telemetry',
+    date: 'Regional Basin Context',
     type: 'River Surge',
     source: 'Uttarakhand SDMA Regional Context',
     summary: '7,530 km² catchment draining Gangotri glacier & Tehri reservoir headwaters; high-altitude precipitation surveillance.',
@@ -140,7 +140,7 @@ export const NATIONAL_EVENTS: NationalEvent[] = [
     state: 'Uttarakhand',
     coords: [78.20, 30.90],
     severity: 'WATCH',
-    date: 'Monsoon Telemetry',
+    date: 'Regional Basin Context',
     type: 'Cloudburst / Flash Flood',
     source: 'Uttarakhand SDMA Regional Context',
     summary: 'Upper Yamunotri & Tons valley drainage; antecedent slope saturation and seasonal debris watch.',
@@ -631,15 +631,15 @@ export default function WatershedMap({
   // Current selected location data for map insight card
   const selectedLocData = locations.find(l => l.id === selected)
 
-  // Map header title based on current zoom level (Section 8 Requirements)
+  // Map header title based on current zoom level - Clearly distinguish Context vs Active Pilot
   const mapLevelData =
     currentPreset === 'india'
-      ? { title: 'NATIONAL DISASTER SITUATIONAL AWARENESS', sub: 'Himalayan Focus' }
+      ? { title: 'NATIONAL SITUATIONAL AWARENESS', sub: 'Regional Context Overview (Non-Predictive)' }
       : currentPreset === 'himalayas'
-      ? { title: 'HIMALAYAN ARC SITUATION', sub: 'Regional Context' }
+      ? { title: 'HIMALAYAN MOUNTAIN ARC', sub: 'Regional Context Overview (Non-Predictive)' }
       : currentPreset === 'uttarakhand'
-      ? { title: 'UTTARAKHAND', sub: 'River Basin Situation' }
-      : { title: 'MANDAKINI BASIN', sub: 'AAGAAH ACTIVE MODEL PILOT' }
+      ? { title: 'UTTARAKHAND RIVER BASINS', sub: 'Regional Catchment Context (Non-Predictive)' }
+      : { title: 'MANDAKINI RIVER BASIN (1,638 km²)', sub: 'ACTIVE PREDICTIVE MODEL PILOT · 7 MONITORED REACHES' }
 
   return (
     <div className="watershed-map-root w-full h-full relative" ref={host}>
@@ -666,35 +666,35 @@ export default function WatershedMap({
             <button
               onClick={() => zoomTo('india')}
               className={`geo-preset-btn ${currentPreset === 'india' ? 'active' : ''}`}
-              title="Fly to National Situational Awareness view"
+              title="National overview (Regional geographic context only)"
             >
-              India
+              India (Context)
             </button>
             <button
               onClick={() => zoomTo('himalayas')}
               className={`geo-preset-btn ${currentPreset === 'himalayas' ? 'active' : ''}`}
-              title="Surveillance of the Himalayan mountain arc"
+              title="Himalayan mountain arc (Regional geographic context only)"
             >
-              Himalayas
+              Himalayas (Context)
             </button>
             <button
               onClick={() => zoomTo('uttarakhand')}
               className={`geo-preset-btn ${currentPreset === 'uttarakhand' ? 'active' : ''}`}
-              title="Inspect Uttarakhand river catchments"
+              title="Uttarakhand state basins (Regional geographic context only)"
             >
-              Uttarakhand
+              Uttarakhand (Context)
             </button>
             <button
               onClick={() => zoomTo('mandakini')}
               className={`geo-preset-btn ${currentPreset === 'mandakini' || currentPreset === 'location' ? 'active' : ''}`}
-              title="Zoom into Mandakini Basin Active Model Pilot"
+              title="Mandakini Basin — Active Predictive Model Pilot with 7 Monitored River Reaches"
             >
-              Mandakini Pilot
+              Mandakini (Active Pilot)
             </button>
           </div>
         </div>
 
-        {/* Dynamic Map Level Title Badge - 2-tier Government Title */}
+        {/* Dynamic Map Level Title Badge */}
         <div className="bg-[#17324A]/95 backdrop-blur text-white px-3.5 py-1.5 rounded-md shadow-md flex flex-col border border-[#174A7E]/50 max-w-fit">
           <div className="text-[11.5px] font-extrabold tracking-wide uppercase text-white flex items-center gap-1.5">
             <Compass size={13} className="text-sky-300" />
@@ -952,11 +952,11 @@ export default function WatershedMap({
         <div className="flex items-center gap-4 text-[10px] text-slate-600 pt-0.5 border-t border-slate-100">
           <div className="flex items-center gap-1.5">
             <span className="w-4 h-1 bg-[#174A7E] rounded" />
-            <span>Model Reach Coverage</span>
+            <span>Active Pilot (Mandakini Reaches)</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-4 h-0.5 border-b border-dashed border-slate-500" />
-            <span>Regional Basin</span>
+            <span>Regional Context (Non-Predictive)</span>
           </div>
         </div>
       </div>

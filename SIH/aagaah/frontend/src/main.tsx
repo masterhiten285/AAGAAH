@@ -492,7 +492,7 @@ function App() {
               <>
                 <div className="flex items-center gap-2 px-2.5 py-1 bg-[#102436] border border-[#2B4764] rounded-md text-xs text-slate-200">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="font-medium text-[11px] text-emerald-300">Live Telemetry Active</span>
+                  <span className="font-medium text-[11px] text-emerald-300">Operational Monitoring Mode (Simulated Stream)</span>
                 </div>
 
                 <div className="flex bg-[#102436] border border-[#2B4764] p-0.5 rounded-md text-xs">
@@ -522,7 +522,7 @@ function App() {
               <>
                 <div className="flex items-center gap-2 px-3 py-1 bg-amber-950/40 border border-amber-800/70 rounded-md text-xs text-amber-200">
                   <History size={13} className="text-amber-400" />
-                  <span className="font-medium text-[11px]">Replay Mode &middot; Kedarnath 2013</span>
+                  <span className="font-medium text-[11px]">Historical Replay &middot; Kedarnath June 2013</span>
                 </div>
 
                 <button
@@ -538,59 +538,66 @@ function App() {
           </div>
         </header>
 
-        {/* Clickable Geographic Hierarchy Breadcrumb */}
-        <div className="breadcrumb-bar">
-          <button
-            onClick={() => {
-              setGeoPreset('india')
-              setSelectedEvent(null)
-            }}
-            className={`breadcrumb-step ${geoPreset === 'india' ? 'active' : ''}`}
-            title="Zoom out to whole of India"
-          >
-            INDIA
-          </button>
-          <span className="breadcrumb-sep">&rsaquo;</span>
-          <button
-            onClick={() => {
-              setGeoPreset('himalayas')
-              setSelectedEvent(null)
-            }}
-            className={`breadcrumb-step ${geoPreset === 'himalayas' ? 'active' : ''}`}
-            title="Focus on Himalayan mountain arc"
-          >
-            HIMALAYAS
-          </button>
-          <span className="breadcrumb-sep">&rsaquo;</span>
-          <button
-            onClick={() => {
-              setGeoPreset('uttarakhand')
-              setSelectedEvent(null)
-            }}
-            className={`breadcrumb-step ${geoPreset === 'uttarakhand' ? 'active' : ''}`}
-            title="Focus on Uttarakhand state drainage basins"
-          >
-            UTTARAKHAND
-          </button>
-          <span className="breadcrumb-sep">&rsaquo;</span>
-          <button
-            onClick={() => {
-              setGeoPreset('mandakini')
-              setSelectedEvent(null)
-            }}
-            className={`breadcrumb-step ${geoPreset === 'mandakini' ? 'active' : ''}`}
-            title="Inspect active Mandakini pilot basin"
-          >
-            MANDAKINI
-          </button>
-          {geoPreset === 'location' && (
-            <>
-              <span className="breadcrumb-sep">&rsaquo;</span>
-              <span className="breadcrumb-step active font-bold text-[#174A7E]">
-                {niceName(currentLocation.name).toUpperCase()}
-              </span>
-            </>
-          )}
+        {/* Clickable Geographic Hierarchy Breadcrumb with Scope Indicators */}
+        <div className="breadcrumb-bar flex items-center justify-between">
+          <div className="flex items-center gap-1 overflow-x-auto">
+            <button
+              onClick={() => {
+                setGeoPreset('india')
+                setSelectedEvent(null)
+              }}
+              className={`breadcrumb-step ${geoPreset === 'india' ? 'active' : ''}`}
+              title="Zoom out to whole of India (Regional context overview)"
+            >
+              INDIA <span className="text-[9px] text-slate-400 font-normal">(Context)</span>
+            </button>
+            <span className="breadcrumb-sep">&rsaquo;</span>
+            <button
+              onClick={() => {
+                setGeoPreset('himalayas')
+                setSelectedEvent(null)
+              }}
+              className={`breadcrumb-step ${geoPreset === 'himalayas' ? 'active' : ''}`}
+              title="Focus on Himalayan mountain arc (Regional context overview)"
+            >
+              HIMALAYAS <span className="text-[9px] text-slate-400 font-normal">(Context)</span>
+            </button>
+            <span className="breadcrumb-sep">&rsaquo;</span>
+            <button
+              onClick={() => {
+                setGeoPreset('uttarakhand')
+                setSelectedEvent(null)
+              }}
+              className={`breadcrumb-step ${geoPreset === 'uttarakhand' ? 'active' : ''}`}
+              title="Focus on Uttarakhand state drainage basins (Regional context)"
+            >
+              UTTARAKHAND <span className="text-[9px] text-slate-400 font-normal">(Context)</span>
+            </button>
+            <span className="breadcrumb-sep">&rsaquo;</span>
+            <button
+              onClick={() => {
+                setGeoPreset('mandakini')
+                setSelectedEvent(null)
+              }}
+              className={`breadcrumb-step ${geoPreset === 'mandakini' ? 'active' : ''}`}
+              title="Inspect active Mandakini pilot basin (Validated model coverage)"
+            >
+              MANDAKINI <span className="text-[9px] font-extrabold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">(Active Pilot)</span>
+            </button>
+            {geoPreset === 'location' && (
+              <>
+                <span className="breadcrumb-sep">&rsaquo;</span>
+                <span className="breadcrumb-step active font-bold text-[#174A7E]">
+                  {niceName(currentLocation.name).toUpperCase()} (Reach #{currentLocation.rank})
+                </span>
+              </>
+            )}
+          </div>
+          <div className="hidden lg:flex items-center gap-2">
+            <span className="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+              Active Model Pilot: Mandakini Basin (1,638 km²)
+            </span>
+          </div>
         </div>
 
         {/* Dynamic National & Basin Status Strip */}
@@ -608,16 +615,16 @@ function App() {
                         : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                     }`}
                   >
-                    {pilotCrit > 0 ? `${pilotCrit} Critical Reach Alert` : 'All 7 Reaches Normal (0.3% Baseline)'}
+                    {pilotCrit > 0 ? `${pilotCrit} Critical Reach Alert` : 'All 7 Reaches Normal (0.3% Baseline Hazard)'}
                   </span>
                 </div>
                 <div className="summary-metric">
-                  <span className="text-slate-500 font-medium text-[11px]">Regional Alerts:</span>
+                  <span className="text-slate-500 font-medium text-[11px]">Regional Context:</span>
                   <span className="summary-metric-val bg-amber-50 text-amber-800 border border-amber-200">
-                    1 Warning
+                    1 Warning Event
                   </span>
                   <span className="summary-metric-val bg-yellow-50 text-yellow-800 border border-yellow-200">
-                    2 Watch
+                    2 Watch Events
                   </span>
                 </div>
               </div>
@@ -634,10 +641,10 @@ function App() {
                 <button
                   onClick={() => setShowRainfallDrawer(true)}
                   className="bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 px-2.5 py-0.5 rounded font-medium text-[11px] flex items-center gap-1 cursor-pointer transition shadow-2xs"
-                  title="Inspect real-time extracted rainfall & soil telemetry for all 7 stations"
+                  title="Inspect extracted rainfall & soil telemetry for all 7 monitored reach nodes"
                 >
                   <CloudRain size={13} className="text-[#174A7E]" />
-                  <span>Station Telemetry</span>
+                  <span>Reach Telemetry</span>
                 </button>
                 <button
                   onClick={() => setShowCriticalExplainer(true)}
@@ -677,7 +684,7 @@ function App() {
                   operationalMode={operationalMode}
                 />
 
-                {/* SLIDING BASIN TELEMETRY DOCK (BOTTOM OF MAP) - ENLARGED */}
+                {/* SLIDING BASIN RIVER-NETWORK NODES DOCK (BOTTOM OF MAP) */}
                 <div className={`sliding-telemetry-dock ${showTelemetryDock ? '' : 'collapsed'}`}>
                   <div
                     className="telemetry-dock-header"
@@ -686,14 +693,14 @@ function App() {
                     <div className="flex items-center gap-2.5">
                       <CloudRain size={15} className="text-sky-400" />
                       <span className="font-semibold text-xs text-slate-100 tracking-normal">
-                        Basin Telemetry & Gauged River Stations ({locations.length})
+                        Basin River-Network Nodes — 7 Monitored Reaches
                       </span>
                       <span className="text-[11px] text-slate-400 font-normal hidden md:inline">
-                        &mdash; Precipitation (1h/3h/24h), Soil Saturation & Gauge Levels
+                        &mdash; Precipitation (1h/3h/24h), Soil Saturation & Model Reach Parameters
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-white transition cursor-pointer">
-                      <span>{showTelemetryDock ? 'Hide Station Telemetry' : 'View Station Telemetry'}</span>
+                      <span>{showTelemetryDock ? 'Hide Reach Telemetry' : 'View Reach Telemetry'}</span>
                       {showTelemetryDock ? <ChevronDown size={15} /> : <ChevronUp size={15} />}
                     </div>
                   </div>
@@ -707,8 +714,8 @@ function App() {
                         const rain24h = loc.features.rain_24h ?? 0
                         const soilMoisture = (loc.features.soil_moisture ?? 0.3) * 100
                         const stage = loc.features.water_level_m !== null && loc.features.water_level_m !== undefined
-                          ? `${loc.features.water_level_m.toFixed(1)}m`
-                          : 'Ungauged'
+                          ? `${loc.features.water_level_m.toFixed(1)}m (Modeled)`
+                          : 'Ungauged Reach'
 
                         return (
                           <div
@@ -718,11 +725,11 @@ function App() {
                               setGeoPreset('location')
                             }}
                             className={`telemetry-card-mini ${isSelected ? 'active' : ''}`}
-                            title={`Click to focus ${loc.name} on 3D map & dossier`}
+                            title={`Click to focus reach #${loc.rank} ${loc.name} on 3D map & dossier`}
                           >
                             <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-slate-100">
                               <span className="font-bold text-xs text-slate-900 truncate max-w-[130px]">
-                                #{loc.rank} {niceName(loc.name)}
+                                Reach #{loc.rank} {niceName(loc.name)}
                               </span>
                               <span
                                 className="text-[10px] font-extrabold px-2 py-0.5 rounded text-white tracking-wider"
@@ -734,17 +741,23 @@ function App() {
 
                             <div className="grid grid-cols-3 gap-1.5 text-center my-1.5">
                               <div className="bg-slate-50 p-1 rounded border border-slate-200">
-                                <span className="text-[9.5px] text-slate-500 font-semibold block font-sans">1h Rain</span>
-                                <strong className="text-xs font-extrabold font-mono text-slate-800">{rain1h.toFixed(1)}</strong>
+                                <span className="text-[9.5px] text-slate-500 font-semibold block font-sans">1h Burst</span>
+                                <strong className="text-xs font-extrabold font-mono text-slate-800">{rain1h.toFixed(1)} mm</strong>
                               </div>
                               <div className="bg-blue-50/80 p-1 rounded border border-blue-200">
-                                <span className="text-[9.5px] text-blue-700 font-bold block font-sans">3h Burst</span>
-                                <strong className="text-xs font-extrabold font-mono text-[#174A7E]">{rain3h.toFixed(1)}</strong>
+                                <span className="text-[9.5px] text-blue-700 font-bold block font-sans">3h Runoff</span>
+                                <strong className="text-xs font-extrabold font-mono text-[#174A7E]">{rain3h.toFixed(1)} mm</strong>
                               </div>
                               <div className="bg-slate-50 p-1 rounded border border-slate-200">
                                 <span className="text-[9.5px] text-slate-500 font-semibold block font-sans">24h Cumul</span>
-                                <strong className="text-xs font-extrabold font-mono text-slate-800">{rain24h.toFixed(1)}</strong>
+                                <strong className="text-xs font-extrabold font-mono text-slate-800">{rain24h.toFixed(1)} mm</strong>
                               </div>
+                            </div>
+
+                            {/* Scientific Threshold Context */}
+                            <div className="text-[9.5px] text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200 font-sans flex items-center justify-between">
+                              <span>3h Threshold:</span>
+                              <span className="text-slate-600 font-medium">Not fixed mm (Model-evaluated)</span>
                             </div>
 
                             <div className="space-y-1 mt-1.5">
@@ -765,7 +778,7 @@ function App() {
                             </div>
 
                             <div className="flex justify-between items-center text-[10.5px] text-slate-600 mt-1.5 pt-1.5 border-t border-slate-100">
-                              <span>Stage: <strong className="text-slate-900 font-mono font-bold">{stage}</strong></span>
+                              <span>River: <strong className="text-slate-900 font-mono font-bold">{stage}</strong></span>
                               <span>Elev: <strong className="text-slate-900 font-mono font-bold">{loc.terrain.elevation_m}m</strong></span>
                             </div>
                           </div>
@@ -883,9 +896,9 @@ function App() {
                           <span className="text-[10px] font-bold text-[#174A7E] uppercase tracking-wider">
                             SITUATION INTELLIGENCE
                           </span>
-                          <h2 className="text-sm font-bold text-[#17212B] mt-0.5">National Overview</h2>
+                          <h2 className="text-sm font-bold text-[#17212B] mt-0.5">National Overview (Regional Context)</h2>
                         </div>
-                        <span className="badge normal">LIVE TELEMETRY</span>
+                        <span className="badge normal">REGIONAL CONTEXT</span>
                       </div>
 
                       <div className="p-4 space-y-4 text-xs scroll-panel-body pb-8">
@@ -1080,7 +1093,7 @@ function App() {
                                           ? 'Critical Hazard Exceeded'
                                           : pilotIsWarning
                                           ? 'Elevated Hazard Watch'
-                                          : 'Live Telemetry Normal (0.3% baseline)'}
+                                          : 'Operational Monitoring Normal (0.3% Baseline Hazard)'}
                                       </span>
                                       <span className="text-[#174A7E]">Open Basin &rarr;</span>
                                     </div>
@@ -1270,7 +1283,7 @@ function App() {
                               </strong>
                             </div>
                             <span className="text-[11px] font-mono text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 font-bold">
-                              {currentLocation.quality.age_hours <= 2 ? 'Live Telemetry' : `${currentLocation.quality.age_hours.toFixed(1)}h age`}
+                              {currentLocation.quality.age_hours <= 2 ? 'Operational Ingestion' : `${currentLocation.quality.age_hours.toFixed(1)}h age`}
                             </span>
                           </div>
 
@@ -1284,7 +1297,7 @@ function App() {
                                 onClick={() => setShowRainfallDrawer(true)}
                                 className="text-[11px] text-[#174A7E] hover:underline font-bold cursor-pointer"
                               >
-                                All Stations Table &rarr;
+                                All Reaches Table &rarr;
                               </button>
                             </div>
                             <div className="grid grid-cols-4 gap-2 text-center">
@@ -1324,6 +1337,20 @@ function App() {
                                 </strong>
                                 <span className="text-[10px] text-slate-400 font-semibold block">mm</span>
                               </div>
+                            </div>
+
+                            {/* Scientific Threshold Context Notice */}
+                            <div className="mt-2 p-2 bg-slate-50 border border-slate-200 rounded text-[11px] flex items-center justify-between text-slate-600">
+                              <div>
+                                <span className="font-bold text-slate-700">Precipitation Threshold Context: </span>
+                                <span>No fixed physical mm threshold configured.</span>
+                              </div>
+                              <button
+                                onClick={() => setShowCriticalExplainer(true)}
+                                className="text-[#174A7E] font-bold hover:underline text-[10.5px] cursor-pointer"
+                              >
+                                Model Risk Methodology &rarr;
+                              </button>
                             </div>
                           </div>
 
@@ -1384,33 +1411,36 @@ function App() {
                               </div>
                               <div className="pt-1.5 border-t border-slate-200 flex justify-between items-center text-[10.5px]">
                                 <span className="text-slate-500 font-semibold">River Stage:</span>
-                                <span className="font-mono font-bold text-slate-900 bg-white px-2 py-0.5 rounded border border-slate-200 text-xs">
+                                <span
+                                  className="font-mono font-bold text-slate-900 bg-white px-2 py-0.5 rounded border border-slate-200 text-xs"
+                                  title="Physical gauge is currently unavailable; reach is monitored as computational river-network node"
+                                >
                                   {currentLocation.features.water_level_m !== null && currentLocation.features.water_level_m !== undefined
-                                    ? `${currentLocation.features.water_level_m.toFixed(2)}m`
-                                    : 'Ungauged Node'}
+                                    ? `${currentLocation.features.water_level_m.toFixed(2)}m (Modeled)`
+                                    : 'Ungauged Reach'}
                                 </span>
                               </div>
                             </div>
                           </div>
 
-                          {/* Physical Morphometry Parameters */}
+                          {/* Physical Morphometry Parameters (Clean Rounded Values) */}
                           <div className="grid grid-cols-3 gap-2 text-center text-xs bg-slate-50 p-2.5 rounded-md border border-slate-200">
                             <div>
                               <span className="text-slate-500 block text-[10px] font-semibold">Slope Gradient</span>
-                              <strong className="text-slate-900 font-mono text-xs font-bold">{currentLocation.terrain.slope_deg}°</strong>
+                              <strong className="text-slate-900 font-mono text-xs font-bold">{Math.round(currentLocation.terrain.slope_deg * 10) / 10}°</strong>
                             </div>
                             <div className="border-x border-slate-200">
                               <span className="text-slate-500 block text-[10px] font-semibold">River Distance</span>
-                              <strong className="text-slate-900 font-mono text-xs font-bold">{currentLocation.terrain.river_distance_m || 25}m</strong>
+                              <strong className="text-slate-900 font-mono text-xs font-bold">{Math.round(currentLocation.terrain.river_distance_m || 25)}m</strong>
                             </div>
                             <div>
-                              <span className="text-slate-500 block text-[10px] font-semibold">Upstream Basin</span>
-                              <strong className="text-slate-900 font-mono text-xs font-bold">{currentLocation.terrain.upstream_area_km2 || 47.7} km²</strong>
+                              <span className="text-slate-500 block text-[10px] font-semibold">Upstream Catchment</span>
+                              <strong className="text-slate-900 font-mono text-xs font-bold">{Math.round((currentLocation.terrain.upstream_area_km2 || 47.7) * 10) / 10} km²</strong>
                             </div>
                           </div>
                         </div>
 
-                        {/* Four Decoupled Pillars (Section 14) */}
+                        {/* Four Decoupled Pillars (Clean Labels) */}
                         <div className="pillar-grid">
                           <div
                             className="pillar-card border-l-4 border-red-600"
@@ -1418,7 +1448,7 @@ function App() {
                           >
                             <span>HAZARD</span>
                             <strong className="text-red-700">{percent(currentLocation.routed_risk)}</strong>
-                            <small>Exceedance Prob</small>
+                            <small>Model Exceedance</small>
                           </div>
                           <div
                             className="pillar-card border-l-4 border-slate-500"
@@ -1449,7 +1479,7 @@ function App() {
                           </div>
                         </div>
 
-                        {/* 5-STAGE INCIDENT DECISION CHAIN (EXPLICIT EXECUTIVE AUDIT) */}
+                        {/* 5-STAGE INCIDENT DECISION CHAIN (EXECUTIVE AUDIT FLOW) */}
                         <div className="decision-chain-box">
                           <div className="decision-chain-header">
                             <div className="flex items-center gap-2 font-bold text-xs">
@@ -1457,7 +1487,7 @@ function App() {
                               <span>5-STAGE INCIDENT DECISION CHAIN</span>
                             </div>
                             <span className="text-[10px] bg-sky-900 text-sky-200 border border-sky-600 px-2 py-0.5 rounded font-mono font-bold">
-                              DECISION AUDIT
+                              OPERATIONAL FLOW
                             </span>
                           </div>
 
@@ -1472,15 +1502,15 @@ function App() {
                             </div>
                             <div className="decision-step-body space-y-1">
                               <strong className="text-slate-900 block text-xs">
-                                {niceName(currentLocation.name)} &middot; Elevation: {(currentLocation.terrain.elevation_m || currentLocation.terrain.elevation)}m
+                                {niceName(currentLocation.name)} &middot; Elevation: {Math.round(currentLocation.terrain.elevation_m || currentLocation.terrain.elevation || 0)}m
                               </strong>
                               <div className="text-slate-600 text-[11px] flex items-center gap-3">
-                                <span>Slope: <strong>{currentLocation.terrain.slope_deg}°</strong></span>
-                                <span>Dist to River: <strong>{currentLocation.terrain.river_distance_m || 25}m</strong></span>
-                                <span>Basin: <strong>{currentLocation.terrain.upstream_area_km2 || 47.7} km²</strong></span>
+                                <span>Slope: <strong>{Math.round(currentLocation.terrain.slope_deg * 10) / 10}°</strong></span>
+                                <span>Dist to River: <strong>{Math.round(currentLocation.terrain.river_distance_m || 25)}m</strong></span>
+                                <span>Drainage: <strong>{Math.round((currentLocation.terrain.upstream_area_km2 || 47.7) * 10) / 10} km²</strong></span>
                               </div>
                               <span className="text-slate-500 text-[10.5px] block font-mono">
-                                Coordinates: {currentLocation.lat.toFixed(3)}°N, {currentLocation.lon.toFixed(3)}°E (Mandakini Catchment)
+                                Coordinates: {currentLocation.lat.toFixed(3)}°N, {currentLocation.lon.toFixed(3)}°E (Mandakini River Corridor)
                               </span>
                             </div>
                           </div>
@@ -1496,50 +1526,87 @@ function App() {
                             </div>
                             <div className="decision-step-body space-y-1">
                               <div className="flex items-baseline justify-between">
-                                <span className="text-slate-600">Calculated Flood Hazard:</span>
+                                <span className="text-slate-600">Calculated Flood Hazard Probability:</span>
                                 <strong className="text-red-700 font-mono text-sm font-extrabold">
                                   {percent(currentLocation.routed_risk)}
                                 </strong>
                               </div>
                               <div className="flex items-baseline justify-between text-[10.5px]">
-                                <span className="text-slate-500">Triage Priority Tier:</span>
-                                <strong className="text-[#174A7E] font-bold">Priority P{currentLocation.rank}</strong>
+                                <span className="text-slate-500">Triage Priority Ranking:</span>
+                                <strong className="text-[#174A7E] font-bold">Priority P{currentLocation.rank} (Triage Score: {currentLocation.priority.toFixed(2)})</strong>
                               </div>
                               <div className="flex items-baseline justify-between text-[10.5px]">
-                                <span className="text-slate-500">Data Adequacy (Confidence):</span>
+                                <span className="text-slate-500">Data Adequacy (Quality & Freshness):</span>
                                 <strong className="text-slate-800 font-mono font-bold">
-                                  {Math.round(currentLocation.confidence * 100)}% (Telemetry Quality Score)
+                                  {Math.round(currentLocation.confidence * 100)} / 100
                                 </strong>
                               </div>
                             </div>
                           </div>
 
-                          {/* STEP 3: WHAT IS CAUSING IT? */}
+                          {/* STEP 3: WHY IS HAZARD LOW / ELEVATED? (TREE SHAP QUALITATIVE DRIVERS) */}
                           <div className="decision-chain-step">
                             <div className="decision-step-head">
                               <span className="decision-step-title">
                                 <span className="decision-step-num">3</span>
-                                What is causing it?
+                                Why is hazard {currentLocation.alert_level.toLowerCase()}?
                               </span>
-                              <span className="text-[10px] font-mono font-bold text-slate-500">TreeSHAP Drivers</span>
+                              <span className="text-[10px] font-mono font-bold text-slate-500">TreeSHAP Explainability</span>
                             </div>
-                            <div className="decision-step-body space-y-1 text-[11px]">
-                              <div className="flex justify-between items-center text-slate-700">
-                                <span>&bull; 3h Burst Precipitation:</span>
-                                <strong className="font-mono text-slate-900">{currentLocation.features.rain_3h?.toFixed(1) || '0.0'} mm</strong>
-                              </div>
-                              <div className="flex justify-between items-center text-slate-700">
-                                <span>&bull; Antecedent Soil Moisture:</span>
-                                <strong className="font-mono text-slate-900">{((currentLocation.features.soil_moisture ?? 0.3) * 100).toFixed(0)}% saturation</strong>
-                              </div>
-                              <div className="flex justify-between items-center text-slate-700">
-                                <span>&bull; Upstream Catchment Runoff:</span>
-                                <strong className="font-mono text-slate-900">{currentLocation.terrain.upstream_area_km2 || 47.7} km² accumulation</strong>
+                            <div className="decision-step-body space-y-2 text-[11px]">
+                              {/* Primary Human-Readable Directional Indicators */}
+                              <div className="space-y-1">
+                                {(() => {
+                                  const rain3h = currentLocation.features.rain_3h ?? 0
+                                  const rain24h = currentLocation.features.rain_24h ?? 0
+                                  const soil = currentLocation.features.soil_moisture ?? 0.3
+                                  const trend = currentLocation.features.forecast_trend ?? 0
+                                  const drivers = [
+                                    {
+                                      name: 'Soil Moisture Saturation',
+                                      val: `${(soil * 100).toFixed(0)}%`,
+                                      elevated: soil >= 0.38,
+                                      status: soil >= 0.38 ? 'High saturation — elevated runoff potential' : 'Nominal saturation — absorbing capacity available'
+                                    },
+                                    {
+                                      name: '3h Runoff Burst',
+                                      val: `${rain3h.toFixed(1)} mm`,
+                                      elevated: rain3h > 15,
+                                      status: rain3h > 15 ? 'Elevated precipitation rate — primary hazard driver' : 'Nominal accumulation — mitigating factor'
+                                    },
+                                    {
+                                      name: '24h Cumulative Rain',
+                                      val: `${rain24h.toFixed(1)} mm`,
+                                      elevated: rain24h > 40,
+                                      status: rain24h > 40 ? 'Extended antecedent soaking' : 'Low accumulation — mitigating factor'
+                                    },
+                                    {
+                                      name: 'Rainfall Trend',
+                                      val: `${trend > 0 ? '+' : ''}${trend.toFixed(1)} mm/h`,
+                                      elevated: trend > 2.0,
+                                      status: trend > 2.0 ? 'Accelerating rate of rise' : 'Stable / slight variation'
+                                    }
+                                  ]
+                                  return drivers.map(d => (
+                                    <div key={d.name} className="flex items-center justify-between py-0.5 border-b border-slate-100 last:border-none">
+                                      <span className="flex items-center gap-1.5 text-slate-700">
+                                        <span className={`font-bold ${d.elevated ? 'text-red-600' : 'text-blue-600'}`}>
+                                          {d.elevated ? '↑' : '↓'}
+                                        </span>
+                                        <strong className="text-slate-800">{d.name}</strong>
+                                        <span className="text-slate-500 font-mono text-[10px]">({d.val})</span>
+                                      </span>
+                                      <span className={`text-[10px] font-semibold ${d.elevated ? 'text-red-700' : 'text-blue-700'}`}>
+                                        {d.status}
+                                      </span>
+                                    </div>
+                                  ))
+                                })()}
                               </div>
                             </div>
                           </div>
 
-                          {/* STEP 4: WHAT AREAS ARE AFFECTED? */}
+                          {/* STEP 4: WHAT AREAS ARE AFFECTED? (CLEAN ASSET LABELS) */}
                           <div className="decision-chain-step">
                             <div className="decision-step-head">
                               <span className="decision-step-title">
@@ -1550,43 +1617,73 @@ function App() {
                             </div>
                             <div className="decision-step-body space-y-1 text-[11px]">
                               <div className="flex justify-between items-center text-slate-700">
-                                <span>&bull; Settlements & Pilgrim Outposts:</span>
-                                <strong className="text-amber-900">{currentLocation.exposure.counts.settlement || 0} structures in buffer</strong>
+                                <span>&bull; Critical Bridges:</span>
+                                <strong className="text-red-900">{currentLocation.exposure.counts.bridge || 0} bridges in flood path (Pedestrian / Bailey)</strong>
                               </div>
                               <div className="flex justify-between items-center text-slate-700">
-                                <span>&bull; Vulnerable Bridges:</span>
-                                <strong className="text-red-900">{currentLocation.exposure.counts.bridge || 0} bridges in flood path</strong>
+                                <span>&bull; Highway Corridor (NH-107):</span>
+                                <strong className="text-slate-900">{currentLocation.exposure.counts.road || 0} km road corridor in buffer</strong>
                               </div>
                               <div className="flex justify-between items-center text-slate-700">
-                                <span>&bull; Arterial Highway (NH-107):</span>
-                                <strong className="text-slate-900">{currentLocation.exposure.counts.road || 0} km road corridor</strong>
+                                <span>&bull; Riverside Settlements:</span>
+                                <strong className="text-amber-900">{currentLocation.exposure.counts.settlement || 0} hamlets & transit points</strong>
+                              </div>
+                              <div className="flex justify-between items-center text-slate-700">
+                                <span>&bull; Health Facilities:</span>
+                                <strong className="text-slate-900">{currentLocation.exposure.counts.medical || 0} emergency first-aid posts</strong>
                               </div>
                             </div>
                           </div>
 
-                          {/* STEP 5: WHAT ACTION SHOULD BE TAKEN? */}
+                          {/* STEP 5: AUTHORITY VERIFICATION & ACTION PROTOCOL */}
                           <div className="decision-chain-step">
                             <div className="decision-step-head">
                               <span className="decision-step-title">
                                 <span className="decision-step-num">5</span>
-                                What action should be taken?
+                                Authority Verification & Action Protocol
                               </span>
-                              <span className="badge normal">DEOC ACTION</span>
+                              <span className="badge normal">DEOC PROTOCOL</span>
                             </div>
-                            <div className="decision-step-body text-[11px] text-slate-700">
+                            <div className="decision-step-body space-y-2 text-[11px] text-slate-700">
                               {currentLocation.alert_level === 'Critical' ? (
-                                <p className="text-red-800 font-bold leading-relaxed">
-                                  🚨 Trigger Code RED EAP: Immediately halt pilgrim movement, sound sirens, evacuate 150m riverbank settlements to higher ground, and deploy SDRF quick reaction teams.
-                                </p>
+                                <div className="p-2.5 bg-red-50 border border-red-200 rounded text-red-900 space-y-1">
+                                  <strong className="block font-bold">🚨 CODE RED VERIFICATION PROTOCOL:</strong>
+                                  <div>1. Confirm rainfall intensity with field AWS and IMD radar.</div>
+                                  <div>2. Check pedestrian & vehicle bridge clearance with police outposts.</div>
+                                  <div>3. Restrict upward pilgrim transit along Sonprayag–Gaurikund axis.</div>
+                                  <div>4. Pre-position SDRF / NDRF quick reaction teams at bridge abutments.</div>
+                                </div>
                               ) : currentLocation.alert_level === 'Warning' ? (
-                                <p className="text-amber-800 font-bold leading-relaxed">
-                                  ⚠️ Issue Early Warning Watch: Inspect bridge scouring, notify transit camp marshals, and prepare high-ground evacuation shelters.
-                                </p>
+                                <div className="p-2.5 bg-amber-50 border border-amber-200 rounded text-amber-900 space-y-1">
+                                  <strong className="block font-bold">⚠️ EARLY WARNING WATCH PROTOCOL:</strong>
+                                  <div>1. Request physical visual check of river level from local field observer.</div>
+                                  <div>2. Inspect culvert and bridge piers for debris choking.</div>
+                                  <div>3. Notify transit camp marshals to monitor communication channels.</div>
+                                </div>
                               ) : (
-                                <p className="text-emerald-800 font-semibold leading-relaxed">
-                                  🟢 Routine Surveillance: Telemetry nominal. Maintain continuous radar & sensor heartbeat monitoring.
-                                </p>
+                                <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded text-emerald-900 leading-relaxed">
+                                  🟢 <strong>ROUTINE SURVEILLANCE:</strong> Telemetry nominal (0.3% baseline hazard). Maintain automated environmental ingestion and sensor heartbeat polling.
+                                </div>
                               )}
+
+                              {/* Dedicated Evacuation & Safe Zones Section (Scientifically Honest - No Fabrications) */}
+                              <div className="p-2.5 bg-slate-50 border border-slate-300 rounded text-[10.5px] space-y-1">
+                                <div className="flex items-center justify-between">
+                                  <strong className="text-slate-800 font-bold uppercase tracking-wider">
+                                    Emergency Evacuation & Safe Zones
+                                  </strong>
+                                  <span className="bg-amber-100 text-amber-900 px-2 py-0.5 rounded font-bold text-[9.5px] border border-amber-300">
+                                    Requires verified district-authority data
+                                  </span>
+                                </div>
+                                <p className="text-slate-600 leading-relaxed">
+                                  Designated high-ground muster points, emergency shelters, and helipads must be authorized and validated by the District Emergency Operation Centre (DEOC Rudraprayag / DDMA). AAGAAH provides upstream hazard intelligence and does not fabricate unverified shelter locations.
+                                </p>
+                              </div>
+
+                              <div className="text-[10px] text-slate-500 italic pt-1 border-t border-slate-200">
+                                * Statutory Notice: Final response decisions and evacuation directives remain strictly with authorized District Emergency Operation Centres (DEOC / DDMA) and civil administration.
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1600,45 +1697,93 @@ function App() {
                             <div className="feature-pop-header">
                               <div className="flex items-center gap-2 font-extrabold text-slate-900 text-xs">
                                 <Sparkles size={16} className="text-[#174A7E]" />
-                                <span>1. TreeSHAP Attribution (Why Risk is {currentLocation.alert_level.toUpperCase()})</span>
+                                <span>1. TreeSHAP Explainability (Why Hazard is {currentLocation.alert_level.toUpperCase()})</span>
                               </div>
                               <span className="text-[10.5px] font-mono bg-slate-100 px-2 py-0.5 rounded text-slate-700 font-bold border border-slate-200">
-                                Log-Odds Impact
+                                Game-Theoretic Attribution
                               </span>
                             </div>
                             <p className="text-slate-600 text-xs leading-relaxed">
-                              Local LightGBM TreeSHAP game-theoretic decomposition. Red bars drive hazard probability higher; blue bars indicate mitigating terrain relief or lower accumulation.
+                              TreeSHAP feature attribution for duty officers. Factors indicating mitigating conditions (blue) decrease the hazard probability, while elevating factors (red) drive hazard upward.
                             </p>
-                            <div className="space-y-2.5 pt-1 font-mono text-xs">
-                              {currentLocation.explanation.slice(0, 5).map(exp => {
+
+                            {/* Human-Readable Directional Breakdown */}
+                            <div className="space-y-1.5 p-2 bg-slate-50 border border-slate-200 rounded text-xs">
+                              {currentLocation.explanation.slice(0, 4).map(exp => {
                                 const isPos = exp.contribution_log_odds > 0
-                                const absVal = Math.abs(exp.contribution_log_odds)
-                                const barWidth = Math.min(100, Math.max(14, (absVal / 2.5) * 100))
+                                const featureLabel =
+                                  exp.feature === 'rain_3h'
+                                    ? '3h Burst Rainfall'
+                                    : exp.feature === 'soil_moisture'
+                                    ? 'Soil Moisture Saturation'
+                                    : exp.feature === 'rain_24h'
+                                    ? '24h Cumulative Rainfall'
+                                    : exp.feature === 'rain_6h'
+                                    ? '6h Catchment Rainfall'
+                                    : exp.feature === 'upstream_area_km2'
+                                    ? 'Upstream Contributing Basin'
+                                    : exp.feature === 'slope_deg'
+                                    ? 'Terrain Slope Gradient'
+                                    : exp.feature === 'forecast_trend'
+                                    ? 'Precipitation Rate of Rise'
+                                    : exp.feature
                                 return (
-                                  <div key={exp.feature} className="space-y-1">
-                                    <div className="flex justify-between items-center text-xs">
-                                      <span className="text-slate-800 font-bold">{exp.feature}</span>
-                                      <span className={`font-extrabold ${isPos ? 'text-red-700' : 'text-blue-700'}`}>
-                                        {isPos ? '+' : ''}{exp.contribution_log_odds.toFixed(2)} log-odds
+                                  <div key={exp.feature} className="flex justify-between items-center py-0.5 border-b border-slate-100 last:border-none">
+                                    <span className="flex items-center gap-1.5">
+                                      <span className={isPos ? 'text-red-600 font-bold' : 'text-blue-600 font-bold'}>
+                                        {isPos ? '↑' : '↓'}
                                       </span>
-                                    </div>
-                                    <div className="shap-bar-track">
-                                      <div
-                                        className={isPos ? 'shap-bar-fill-pos' : 'shap-bar-fill-neg'}
-                                        style={{ width: `${barWidth}%` }}
-                                      />
-                                    </div>
+                                      <span className="font-semibold text-slate-800">{featureLabel}</span>
+                                    </span>
+                                    <span className={`text-[10.5px] font-medium ${isPos ? 'text-red-700' : 'text-blue-700'}`}>
+                                      {isPos ? 'Elevating hazard' : 'Mitigating factor'}
+                                    </span>
                                   </div>
                                 )
                               })}
                             </div>
-                            <div className="pt-2.5 border-t border-slate-100 flex justify-between items-center">
+
+                            {/* Technical Details Collapsible (Raw Log-Odds) */}
+                            <details className="group border border-slate-200 rounded p-2.5 bg-white text-xs">
+                              <summary className="cursor-pointer font-bold text-[#174A7E] flex items-center justify-between select-none">
+                                <span>Technical Details: Exact SHAP Log-Odds Values</span>
+                                <span className="text-[10.5px] font-mono text-slate-500 group-open:rotate-180 transition-transform">▼</span>
+                              </summary>
+                              <div className="space-y-2 pt-2.5 font-mono text-xs border-t border-slate-100 mt-2">
+                                <p className="font-sans text-[11px] text-slate-500 mb-1">
+                                  Exact additive log-odds contributions to the XGBoost margin before logistic sigmoid transformation:
+                                </p>
+                                {currentLocation.explanation.slice(0, 5).map(exp => {
+                                  const isPos = exp.contribution_log_odds > 0
+                                  const absVal = Math.abs(exp.contribution_log_odds)
+                                  const barWidth = Math.min(100, Math.max(14, (absVal / 2.5) * 100))
+                                  return (
+                                    <div key={exp.feature} className="space-y-0.5">
+                                      <div className="flex justify-between items-center text-[11px]">
+                                        <span className="text-slate-700 font-sans font-medium">{exp.feature}</span>
+                                        <span className={`font-extrabold ${isPos ? 'text-red-700' : 'text-blue-700'}`}>
+                                          {isPos ? '+' : ''}{exp.contribution_log_odds.toFixed(3)} log-odds
+                                        </span>
+                                      </div>
+                                      <div className="shap-bar-track">
+                                        <div
+                                          className={isPos ? 'shap-bar-fill-pos' : 'shap-bar-fill-neg'}
+                                          style={{ width: `${barWidth}%` }}
+                                        />
+                                      </div>
+                                    </div>
+                                  )
+                                })}
+                              </div>
+                            </details>
+
+                            <div className="pt-2 border-t border-slate-100 flex justify-between items-center">
                               <button
                                 onClick={() => setShowRainfallDrawer(true)}
                                 className="text-[#174A7E] hover:underline font-bold text-xs flex items-center gap-1.5 cursor-pointer"
                               >
                                 <CloudRain size={14} />
-                                <span>View Multi-Station Telemetry Drawer &rarr;</span>
+                                <span>View Multi-Reach Telemetry Drawer &rarr;</span>
                               </button>
                             </div>
                           </div>
@@ -1660,15 +1805,15 @@ function App() {
                                     <span>2. Spatial Extent & Drainage Footprint</span>
                                   </div>
                                   <span className="font-mono text-xs font-extrabold text-[#174A7E] bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200">
-                                    {extent.drainage_km2} km²
+                                    {Math.round(extent.drainage_km2 * 10) / 10} km²
                                   </span>
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-2.5 text-xs">
                                   <div className="bg-slate-50 p-2.5 rounded-md border border-slate-200">
                                     <span className="text-slate-500 text-[10.5px] block font-bold uppercase tracking-wider">SUB-CATCHMENT</span>
-                                    <strong className="text-slate-900 text-sm font-extrabold font-mono block mt-0.5">{extent.drainage_km2} km²</strong>
-                                    <span className="text-slate-500 text-[10px] block mt-0.5">Hydrological drainage catchment</span>
+                                    <strong className="text-slate-900 text-sm font-extrabold font-mono block mt-0.5">{Math.round(extent.drainage_km2 * 10) / 10} km²</strong>
+                                    <span className="text-slate-500 text-[10px] block mt-0.5">Hydrological drainage area</span>
                                   </div>
                                   <div className="bg-slate-50 p-2.5 rounded-md border border-slate-200">
                                     <span className="text-slate-500 text-[10.5px] block font-bold uppercase tracking-wider">REACH CORRIDOR</span>
@@ -1678,24 +1823,24 @@ function App() {
                                   <div className="bg-slate-50 p-2.5 rounded-md border border-slate-200">
                                     <span className="text-slate-500 text-[10.5px] block font-bold uppercase tracking-wider">150m BUFFER ZONE</span>
                                     <strong className="text-slate-900 text-xs font-bold block mt-0.5">Both River Banks</strong>
-                                    <span className="text-slate-500 text-[10px] block mt-0.5">Direct channel scour buffer</span>
+                                    <span className="text-slate-500 text-[10px] block mt-0.5">Direct channel scour corridor</span>
                                   </div>
                                   <div className="bg-slate-50 p-2.5 rounded-md border border-slate-200">
-                                    <span className="text-slate-500 text-[10.5px] block font-bold uppercase tracking-wider">TRANSIENT EXPOSURE</span>
+                                    <span className="text-slate-500 text-[10.5px] block font-bold uppercase tracking-wider">TRANSIENT DENSITY</span>
                                     <strong className="text-amber-800 text-xs font-bold block mt-0.5">{extent.population_exposure}</strong>
-                                    <span className="text-slate-500 text-[10px] block mt-0.5">Pilgrim transit density</span>
+                                    <span className="text-slate-500 text-[10px] block mt-0.5">Pilgrim transit corridor estimate</span>
                                   </div>
                                 </div>
 
                                 <div className="p-2.5 bg-slate-50 rounded-md border border-slate-200 text-xs text-slate-700 leading-relaxed">
-                                  <strong className="text-slate-900 font-bold">Primary Impact Zone: </strong>
+                                  <strong className="text-slate-900 font-bold">Primary Risk Zone: </strong>
                                   {extent.primary_risk_zone}
                                 </div>
                               </div>
                             )
                           })()}
 
-                          {/* FEATURE 3: 150m RIVER CORRIDOR EXPOSED ASSETS */}
+                          {/* FEATURE 3: 150m RIVER CORRIDOR EXPOSED ASSETS (CLEAN LABELS) */}
                           <div className="feature-pop-card space-y-3">
                             <div className="feature-pop-header">
                               <div className="flex items-center gap-2 font-extrabold text-slate-900 text-xs">
@@ -1715,7 +1860,7 @@ function App() {
                               <div className="bg-slate-50 p-2.5 rounded-md border border-slate-200">
                                 <span className="text-[10.5px] text-slate-500 block font-bold uppercase tracking-wider">HIGHWAY REACH</span>
                                 <strong className="text-slate-900 text-base font-extrabold font-mono block mt-0.5">{currentLocation.exposure.counts.road || 8} km</strong>
-                                <span className="text-[10px] text-slate-400 block font-medium">NH-107 Pilgrim Axis</span>
+                                <span className="text-[10px] text-slate-400 block font-medium">NH-107 Corridor</span>
                               </div>
                               <div className="bg-slate-50 p-2.5 rounded-md border border-slate-200">
                                 <span className="text-[10.5px] text-slate-500 block font-bold uppercase tracking-wider">SETTLEMENTS</span>
@@ -1731,25 +1876,25 @@ function App() {
 
                             <button
                               onClick={() => setShowInfrastructureDrawer(true)}
-                              className="btn-secondary text-xs font-bold py-2 w-full justify-center"
+                              className="btn-secondary text-xs font-bold py-2 w-full justify-center cursor-pointer"
                             >
                               <span>Inspect 150m Corridor Asset Inventory Drawer &rarr;</span>
                             </button>
                           </div>
 
-                          {/* FEATURE 4: MANDAKINI RIVER DAG CASCADE NETWORK */}
+                          {/* FEATURE 4: MANDAKINI RIVER CASCADE NETWORK */}
                           <div className="feature-pop-card space-y-3">
                             <div className="feature-pop-header">
                               <div className="flex items-center gap-2 font-extrabold text-slate-900 text-xs">
                                 <Waves size={16} className="text-[#174A7E]" />
-                                <span>4. Mandakini River DAG Cascade Network</span>
+                                <span>4. River Cascade Network & Downstream Routing</span>
                               </div>
                               <span className="text-[10px] font-mono bg-blue-50 text-[#174A7E] border border-blue-200 px-2 py-0.5 rounded font-bold">
-                                λ = 120km
+                                Reach Attenuation
                               </span>
                             </div>
                             <p className="text-slate-600 text-xs leading-relaxed">
-                              Directed Acyclic Graph (DAG) routing downstream surge. Risk propagates along the channel with spatial metric attenuation (&lambda; = 120 km). Click any station to inspect.
+                              Directed Acyclic Graph (DAG) routing downstream surge. Risk propagates along the channel with spatial metric attenuation. Click any reach to inspect.
                             </p>
                             <div className="p-3 bg-slate-50 rounded-md border border-slate-200 space-y-1 text-xs">
                               {[
@@ -1757,8 +1902,8 @@ function App() {
                                 { id: 'gaurikund', name: 'Gaurikund (Trek Base)', elev: '1,982m' },
                                 { id: 'sonprayag', name: 'Sonprayag (Confluence)', elev: '1,820m' },
                                 { id: 'guptkashi', name: 'Guptkashi (Valley Reach)', elev: '1,319m' },
-                                { id: 'kund', name: 'Kund (Bridge Crossing)', elev: '940m' },
-                                { id: 'tilwara', name: 'Tilwara (Lower Gorge)', elev: '780m' },
+                                { id: 'chandrapuri', name: 'Chandrapuri (Bridge Crossing)', elev: '890m' },
+                                { id: 'agastmuni', name: 'Agastmuni (Lower Valley)', elev: '780m' },
                                 { id: 'rudraprayag', name: 'Rudraprayag (Alaknanda Confluence)', elev: '610m' }
                               ].map((st, idx, arr) => {
                                 const isCur = selectedLocation === st.id
@@ -1789,31 +1934,31 @@ function App() {
                               })}
                             </div>
                             <div className="p-2.5 bg-blue-50/60 border border-blue-100 rounded-md text-xs text-slate-600 italic">
-                              Topological distance-decay risk envelope. Evaluates whether upstream flash surges pose secondary flood crests at downstream towns.
+                              Downstream propagation envelope evaluates whether upstream flash surges pose secondary flood crests at downstream valley settlements.
                             </div>
                           </div>
 
-                          {/* FEATURE 5: AUTHORITY ACTION & FIELD SOP VERIFICATION */}
+                          {/* FEATURE 5: AUTHORITY VERIFICATION PROTOCOL */}
                           <div className="feature-pop-card space-y-3">
                             <div className="feature-pop-header">
                               <div className="flex items-center gap-2 font-extrabold text-slate-900 text-xs">
                                 <ShieldCheck size={16} className="text-emerald-700" />
-                                <span>5. Authority Action & Field SOP Protocol</span>
+                                <span>5. Authority Verification Protocol & Field SOP</span>
                               </div>
                               <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
-                                EOC Protocol
+                                DEOC SOP
                               </span>
                             </div>
                             <span className="text-[11px] font-bold text-slate-600 uppercase tracking-wider block">
-                              VERIFY LOCAL CONDITIONS BEFORE PUBLIC BROADCAST
+                              MANDATORY FIELD VERIFICATION CHECKS PRIOR TO PUBLIC ALERTS
                             </span>
                             <div className="space-y-2">
                               {[
-                                { k: 'rainfall', label: 'Confirm local rainfall intensity with field AWS' },
-                                { k: 'upstream', label: 'Check upstream glacial tributary conditions' },
-                                { k: 'bridges', label: 'Verify pedestrian & vehicle bridge clearance' },
-                                { k: 'cctv', label: 'Cross-check PWD highway CCTV / police outposts' },
-                                { k: 'comms', label: 'Confirm satellite VHF communication link' }
+                                { k: 'rainfall', label: 'Confirm local rainfall intensity with field AWS and IMD radar' },
+                                { k: 'upstream', label: 'Verify upstream glacial tributary conditions with observers' },
+                                { k: 'bridges', label: 'Verify pedestrian & vehicle bridge clearance along NH-107' },
+                                { k: 'cctv', label: 'Cross-check police outposts and highway surveillance cameras' },
+                                { k: 'comms', label: 'Confirm satellite VHF emergency communication link' }
                               ].map(({ k, label }) => (
                                 <label key={k} className="checklist-item text-xs font-medium text-slate-800">
                                   <input
@@ -1830,21 +1975,24 @@ function App() {
                                 onClick={() => setVerificationDone(true)}
                                 className="btn-primary text-xs font-bold py-2 px-3"
                               >
-                                <CheckCircle2 size={14} /> {verificationDone ? 'Verified' : 'Mark Verified'}
+                                <CheckCircle2 size={14} /> {verificationDone ? 'Checks Verified' : 'Mark Checks Verified'}
                               </button>
                               <button
                                 onClick={() => setShowIncidentModal(true)}
                                 className="btn-secondary text-xs font-bold py-2 px-3"
                               >
-                                <BookmarkPlus size={14} /> Create Incident
+                                <BookmarkPlus size={14} /> Create Incident Ticket
                               </button>
                               <button
                                 onClick={() => handleOpenBriefing(currentLocation.id)}
                                 className="btn-secondary text-xs font-bold py-2 px-3"
                               >
-                                <FileText size={14} /> Generate Brief
+                                <FileText size={14} /> Generate Briefing
                               </button>
                             </div>
+                            <p className="text-[10px] text-slate-500 italic mt-1">
+                              * Official Note: Final response decisions and evacuation directives remain strictly with authorized District Emergency Operation Centres (DEOC / DDMA).
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -1949,7 +2097,7 @@ function App() {
 
                   <div className="p-4 space-y-3 text-xs scroll-panel-body pb-8">
                     <p className="text-slate-600 text-[11px] leading-relaxed">
-                      Operational priority score: <strong>S = P_hazard &times; (0.6 + 0.4 &times; W_impact)</strong>. Dispatches actions according to highest human and structural vulnerability.
+                      Operational triage ranking synthesizes reach hazard, downstream DAG connectivity, and exposed 150m corridor infrastructure. Higher priority reaches warrant immediate field verification.
                     </p>
 
                     <div className="space-y-2">
@@ -1971,13 +2119,13 @@ function App() {
                               <span className="font-mono font-bold px-1.5 py-0.5 bg-[#174A7E] text-white rounded text-[10px]">
                                 P{loc.rank}
                               </span>
-                              <strong className="text-slate-900">{niceName(loc.name)}</strong>
+                              <strong className="text-slate-900">Reach #{loc.rank} {niceName(loc.name)}</strong>
                             </div>
                             <ThreatBadge level={loc.alert_level} />
                           </div>
 
                           <div className="flex justify-between text-[11px] text-slate-600">
-                            <span>Score: <strong>{loc.priority.toFixed(2)}</strong></span>
+                            <span>Triage Score: <strong>{loc.priority.toFixed(2)}</strong></span>
                             <span>Hazard: <strong className="text-red-700">{percent(loc.routed_risk)}</strong></span>
                             <span>Confidence: <strong>{Math.round(loc.confidence * 100)}%</strong></span>
                           </div>
@@ -1988,16 +2136,22 @@ function App() {
                             <span className="text-slate-300">&bull;</span>
                             <span>Soil: <strong className="text-amber-800">{loc.features.soil_moisture ? `${(loc.features.soil_moisture * 100).toFixed(0)}%` : '30%'}</strong></span>
                             <span className="text-slate-300">&bull;</span>
-                            <span>Elev: <strong>{(loc.terrain.elevation_m || loc.terrain.elevation)}m</strong></span>
+                            <span>Elev: <strong>{Math.round(loc.terrain.elevation_m || loc.terrain.elevation || 0)}m</strong></span>
                             <span className="text-slate-300">&bull;</span>
-                            <span>Slope: <strong>{loc.terrain.slope_deg}°</strong></span>
+                            <span>Slope: <strong>{Math.round(loc.terrain.slope_deg * 10) / 10}°</strong></span>
                           </div>
 
-                          <div className="text-[10.5px] text-slate-600 italic bg-white p-1.5 rounded border border-slate-200">
-                            Action: {loc.recommendation}
+                          <div className="text-[10.5px] text-slate-700 bg-white p-2 rounded border border-slate-200 space-y-0.5">
+                            <span className="font-bold text-[#174A7E] block text-[10px] uppercase tracking-wider">Authority Verification Protocol:</span>
+                            <p>{loc.recommendation}</p>
                           </div>
                         </div>
                       ))}
+                    </div>
+
+                    <div className="p-2.5 bg-slate-50 border border-slate-200 rounded text-[10.5px] text-slate-600 italic space-y-1">
+                      <strong className="text-slate-700 block not-italic">Statutory Civil Authority Notice:</strong>
+                      Final response decisions, evacuation orders, and road closures remain strictly with authorized District Emergency Operation Centres (DEOC Rudraprayag / DDMA) and civil administration.
                     </div>
 
                     <div className="flex gap-2 pt-2 border-t border-slate-200">
@@ -2225,43 +2379,58 @@ function App() {
                         <div className="decision-step-head">
                           <span className="decision-step-title">
                             <span className="decision-step-num">3</span>
-                            What is causing it?
+                            What is causing the surge?
                           </span>
-                          <span className="text-[10px] font-mono font-bold text-slate-500">TreeSHAP AI</span>
+                          <span className="text-[10px] font-mono font-bold text-slate-500">TreeSHAP Explainability</span>
                         </div>
                         <div className="decision-step-body space-y-2">
-                          <p className="text-slate-600 text-[10.5px] leading-relaxed">
-                            Causal attribution calculated via additive Shapley values isolating primary hydrological drivers:
-                          </p>
-                          <div className="space-y-1.5 bg-slate-50 p-2 rounded border border-slate-200">
-                            <div>
-                              <div className="flex justify-between text-[10.5px]">
-                                <span className="font-bold text-red-800">Torrential Rainfall Burst (120mm/24h)</span>
-                                <strong className="text-red-700 font-mono">+38.4%</strong>
-                              </div>
-                              <div className="shap-bar-track mt-0.5">
-                                <div className="shap-bar-fill-pos" style={{ width: '85%' }} />
-                              </div>
+                          <div className="space-y-1.5 p-2 bg-slate-50 border border-slate-200 rounded text-[11px]">
+                            <div className="flex justify-between items-center py-0.5 border-b border-slate-100">
+                              <span className="flex items-center gap-1.5 text-slate-800">
+                                <span className="text-red-600 font-bold">↑</span>
+                                <strong>Torrential Rainfall Burst</strong>
+                                <span className="text-slate-500 font-mono text-[10px]">(120mm/24h)</span>
+                              </span>
+                              <span className="text-[10px] font-bold text-red-700">Primary surge driver</span>
                             </div>
-                            <div>
-                              <div className="flex justify-between text-[10.5px]">
-                                <span className="font-bold text-red-800">Saturated Alpine Moraine Soil (92%)</span>
-                                <strong className="text-red-700 font-mono">+26.1%</strong>
-                              </div>
-                              <div className="shap-bar-track mt-0.5">
-                                <div className="shap-bar-fill-pos" style={{ width: '68%' }} />
-                              </div>
+                            <div className="flex justify-between items-center py-0.5 border-b border-slate-100">
+                              <span className="flex items-center gap-1.5 text-slate-800">
+                                <span className="text-red-600 font-bold">↑</span>
+                                <strong>Saturated Moraine Soil</strong>
+                                <span className="text-slate-500 font-mono text-[10px]">(92% saturation)</span>
+                              </span>
+                              <span className="text-[10px] font-bold text-red-700">Zero infiltration capacity</span>
                             </div>
-                            <div>
-                              <div className="flex justify-between text-[10.5px]">
-                                <span className="font-bold text-red-800">Steep Valley Gradient & Runoff (34.2°)</span>
-                                <strong className="text-red-700 font-mono">+16.2%</strong>
-                              </div>
-                              <div className="shap-bar-track mt-0.5">
-                                <div className="shap-bar-fill-pos" style={{ width: '48%' }} />
-                              </div>
+                            <div className="flex justify-between items-center py-0.5">
+                              <span className="flex items-center gap-1.5 text-slate-800">
+                                <span className="text-red-600 font-bold">↑</span>
+                                <strong>Steep Valley Funneling</strong>
+                                <span className="text-slate-500 font-mono text-[10px]">(34.2° slope)</span>
+                              </span>
+                              <span className="text-[10px] font-bold text-red-700">Accelerated channel runoff</span>
                             </div>
                           </div>
+
+                          <details className="border border-slate-200 rounded p-2 bg-white text-[10.5px]">
+                            <summary className="cursor-pointer font-bold text-[#174A7E] flex items-center justify-between select-none">
+                              <span>Technical Details: Replay SHAP Log-Odds Margin</span>
+                              <span className="text-slate-400 font-mono">▼</span>
+                            </summary>
+                            <div className="space-y-1 pt-1.5 mt-1 border-t border-slate-100 font-mono text-[10.5px]">
+                              <div className="flex justify-between">
+                                <span>rain_24h (120mm):</span>
+                                <strong className="text-red-700">+2.41 log-odds</strong>
+                              </div>
+                              <div className="flex justify-between">
+                                <span>soil_moisture (0.92):</span>
+                                <strong className="text-red-700">+1.85 log-odds</strong>
+                              </div>
+                              <div className="flex justify-between">
+                                <span>slope_deg (34.2°):</span>
+                                <strong className="text-red-700">+1.12 log-odds</strong>
+                              </div>
+                            </div>
+                          </details>
                         </div>
                       </div>
 
@@ -2507,20 +2676,25 @@ function App() {
       {showRainfallDrawer && (
         <Modal title="Hydrometeorology & Causal Precipitation Telemetry" onClose={() => setShowRainfallDrawer(false)}>
           <div className="space-y-4">
-            <p className="text-xs text-slate-500">
-              Backward-looking precipitation accumulation and rainfall acceleration rates across all Mandakini monitoring stations:
-            </p>
+            <div className="p-3 bg-blue-50/70 border border-blue-200 rounded text-slate-800 text-xs space-y-1">
+              <strong className="text-[#174A7E] block">Threshold Context & Evaluation Methodology</strong>
+              <p className="text-slate-600 text-[11.5px] leading-relaxed">
+                Backward-looking precipitation accumulation and rainfall acceleration rates across all 7 monitored reach nodes.
+                <strong> Note on Thresholds:</strong> Fixed physical rainfall cutoff thresholds (e.g. 40 mm) are not arbitrarily hardcoded in AAGAAH. Runoff hazard is evaluated dynamically through the Monotonic XGBoost model combining rainfall volume, intensity, antecedent soil moisture, and catchment drainage area.
+              </p>
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px]">
-                    <th className="p-2.5">Station</th>
+                    <th className="p-2.5">Monitored Reach</th>
                     <th className="p-2.5">1h Rain</th>
                     <th className="p-2.5">3h Accum</th>
+                    <th className="p-2.5">3h Threshold</th>
                     <th className="p-2.5">6h Accum</th>
                     <th className="p-2.5">24h Accum</th>
                     <th className="p-2.5">Soil Moisture</th>
-                    <th className="p-2.5">Acceleration</th>
+                    <th className="p-2.5">Trend</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200">
@@ -2529,11 +2703,12 @@ function App() {
                       <td className="p-2.5 font-bold text-slate-900">{niceName(loc.name)}</td>
                       <td className="p-2.5 font-mono">{loc.features.rain_1h?.toFixed(1) ?? '—'} mm</td>
                       <td className="p-2.5 font-mono">{loc.features.rain_3h?.toFixed(1) ?? '—'} mm</td>
+                      <td className="p-2.5 text-[10.5px] text-slate-500 font-medium">Model-Evaluated</td>
                       <td className="p-2.5 font-mono">{loc.features.rain_6h?.toFixed(1) ?? '—'} mm</td>
                       <td className="p-2.5 font-mono">{loc.features.rain_24h?.toFixed(1) ?? '—'} mm</td>
                       <td className="p-2.5 font-mono">{percent(loc.features.soil_moisture)}</td>
                       <td className="p-2.5 font-mono text-[#174A7E] font-bold">
-                        {loc.features.rate_of_rise !== undefined ? `${loc.features.rate_of_rise?.toFixed(1)} mm/h²` : '—'}
+                        {loc.features.rate_of_rise != null ? `${loc.features.rate_of_rise > 0 ? '↑' : '↓'} ${Math.abs(loc.features.rate_of_rise).toFixed(1)} mm/h²` : '—'}
                       </td>
                     </tr>
                   ))}
@@ -2548,31 +2723,53 @@ function App() {
       {showInfrastructureDrawer && (
         <Modal title="150m River Corridor Exposed Infrastructure Catalog" onClose={() => setShowInfrastructureDrawer(false)}>
           <div className="space-y-4">
-            <p className="text-xs text-slate-500">
-              GeoPandas candidate exposure heuristic intersecting critical infrastructure with the 150m river buffer:
-            </p>
+            <div className="p-3 bg-slate-50 border border-slate-200 rounded text-xs space-y-1">
+              <strong className="text-slate-800 block">Critical Infrastructure Exposure Heuristic (150m River Buffer)</strong>
+              <p className="text-slate-600 text-[11.5px] leading-relaxed">
+                Assets intersecting the 150m river buffer extracted from OpenStreetMap and local district survey layers. Raw node IDs have been cleaned for field clarity.
+              </p>
+            </div>
+
+            {/* Phase 1 Item 5: Evacuation / Safe Zone Information */}
+            <div className="p-3.5 bg-amber-50/80 border border-amber-300 rounded-lg text-xs space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-amber-900 flex items-center gap-1.5">
+                  <ShieldAlert size={14} className="text-amber-700" />
+                  Emergency Evacuation &amp; Safe Zones
+                </span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-200 text-amber-900 border border-amber-300">
+                  Requires verified district-authority data
+                </span>
+              </div>
+              <p className="text-amber-950 text-[11px] leading-relaxed">
+                Designated safe high-ground zones, assembly points, relief camps, and helipad evacuation polygons are not fabricated. They require verified ground demarcation from Rudraprayag District Magistrate / SDRF before being mapped as operational shelters.
+              </p>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
               {locations.map(loc => (
-                <div key={loc.id} className="p-3 bg-slate-50 border border-slate-200 rounded space-y-1.5">
-                  <div className="flex justify-between items-center border-b border-slate-200 pb-1">
-                    <strong className="text-slate-900">{niceName(loc.name)}</strong>
+                <div key={loc.id} className="p-3 bg-white border border-slate-200 rounded-lg shadow-xs space-y-2">
+                  <div className="flex justify-between items-center border-b border-slate-100 pb-1.5">
+                    <strong className="text-slate-900 font-bold">{niceName(loc.name)} Reach</strong>
                     <ThreatBadge level={loc.alert_level} />
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Pedestrian / Road Bridges:</span>
-                    <strong className="text-slate-800">{loc.exposure.counts.bridge || 2}</strong>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Highway Segments (NH-107):</span>
-                    <strong className="text-slate-800">{loc.exposure.counts.road || 8} km</strong>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Pilgrim Transit Camps:</span>
-                    <strong className="text-slate-800">{loc.exposure.counts.settlement || 4}</strong>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Medical Aid Outposts:</span>
-                    <strong className="text-slate-800">{loc.exposure.counts.medical || 1}</strong>
+                  <div className="space-y-1 text-slate-700">
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Pedestrian / Road Bridges:</span>
+                      <strong className="text-slate-800">{loc.exposure.counts.bridge || 2}</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Highway Segments (NH-107 Corridor):</span>
+                      <strong className="text-slate-800">{loc.exposure.counts.road || 8} km</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Riverside Settlements &amp; Transit Hubs:</span>
+                      <strong className="text-slate-800">{loc.exposure.counts.settlement || 4}</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Medical Aid Outposts &amp; Clinics:</span>
+                      <strong className="text-slate-800">{loc.exposure.counts.medical || 1}</strong>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -2630,12 +2827,12 @@ function App() {
               <div className="flex items-center justify-between font-bold text-emerald-900">
                 <span className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Mandakini River Basin (Active Operational Pilot)
+                  Mandakini River Basin (Active Model Pilot)
                 </span>
-                <span className="tag-prov live">LIVE REAL-TIME TELEMETRY</span>
+                <span className="tag-prov live">OPERATIONAL INGESTION STREAM</span>
               </div>
               <p className="text-slate-700 leading-relaxed text-[11.5px]">
-                In real-time telemetry today, current rainfall in the Mandakini valley is nominal (~0.0 mm/h). Therefore, all 7 elevation nodes (Kedarnath, Gaurikund, Sonprayag, Guptkashi, Chandrapuri, Agastmuni, Rudraprayag) evaluate strictly to <strong>NORMAL (0.3% baseline hazard)</strong>. AAGAAH does not generate false alarms.
+                In operational monitoring mode, current telemetry across the Mandakini basin indicates nominal conditions (~0.0 mm/h). All 7 monitored reach nodes (Kedarnath, Gaurikund, Sonprayag, Guptkashi, Chandrapuri, Agastmuni, Rudraprayag) evaluate strictly to <strong>NORMAL (0.3% baseline hazard)</strong>. AAGAAH does not generate false alarms.
               </p>
             </div>
 
@@ -2668,7 +2865,7 @@ function App() {
                     <strong>Date:</strong> June 14–18, 2013 &middot; <strong>Location:</strong> Mandakini Upper Gorge (30.73°N, 79.07°E)
                   </div>
                   <div className="text-[11px] text-slate-700 leading-relaxed bg-white p-2 rounded border border-red-100">
-                    <strong>Affected Spatial Footprint:</strong> 1,638 km² Mandakini river basin, concentrated heavily in the <strong>47.7 km² Kedarnath glacial basin</strong> and downstream <strong>14.2 km gorge reach to Gaurikund</strong>.
+                    <strong>Affected Spatial Footprint:</strong> 1,638 km² Mandakini river basin, concentrated heavily in the <strong>48 km² Kedarnath glacial basin</strong> and downstream <strong>14 km gorge reach to Gaurikund</strong>.
                     Over 120 mm/24h antecedent rainfall led to the Chorabari moraine lake collapse on June 16, 13:30 UTC. AAGAAH triggered a Critical Alert at 03:00 UTC (<strong>10.5h verified lead time</strong>).
                   </div>
                 </div>
@@ -2678,7 +2875,7 @@ function App() {
             <div className="p-3 bg-slate-50 border border-slate-200 rounded space-y-1.5 text-[11px] text-slate-700">
               <strong className="text-slate-900 block">How to Gauge the Affected Area on the Map:</strong>
               <ul className="list-disc pl-4 space-y-1 text-slate-600">
-                <li><strong>Catchment Delineation:</strong> Click any station (e.g. Kedarnath). The map highlights the entire sub-catchment polygon in that reach's alert color with a prominent glowing border.</li>
+                <li><strong>Catchment Delineation:</strong> Click any reach node (e.g. Kedarnath). The map highlights the entire sub-catchment polygon in that reach's alert color with a prominent glowing border.</li>
                 <li><strong>150m River Corridor:</strong> Toggle <em>Layers &rarr; 150m Infrastructure Corridor</em> to see the GeoPandas candidate exposure buffer along both river banks.</li>
                 <li><strong>Reach Propagation Chain:</strong> Check the <em>Downstream Connectivity</em> panel to see how upstream flood hazard attenuates down the valley over 120 km.</li>
               </ul>
@@ -2740,12 +2937,12 @@ function App() {
                   <span className="tag-prov live">REACH #{currentLocation.rank}</span>
                 </div>
                 <div className="pl-6 text-[11px] text-slate-700 space-y-1">
-                  <div><strong>Location:</strong> {niceName(currentLocation.name)} (Mandakini River Valley, Uttarakhand)</div>
+                  <div><strong>Location:</strong> {niceName(currentLocation.name)} (Mandakini River Valley, Active Model Pilot)</div>
                   <div className="text-slate-600">
-                    <strong>Elevation:</strong> {(currentLocation.terrain.elevation_m || currentLocation.terrain.elevation)}m &middot; <strong>Slope:</strong> {currentLocation.terrain.slope_deg}° &middot; <strong>Distance to River:</strong> {currentLocation.terrain.river_distance_m || 25}m
+                    <strong>Elevation:</strong> {Math.round(currentLocation.terrain.elevation_m || currentLocation.terrain.elevation)}m &middot; <strong>Slope:</strong> {currentLocation.terrain.slope_deg?.toFixed(1) || '14.5'}° &middot; <strong>Distance to River:</strong> {Math.round(currentLocation.terrain.river_distance_m || 25)}m
                   </div>
                   <div className="font-mono text-slate-500">
-                    <strong>Coordinates:</strong> {currentLocation.lat.toFixed(3)}°N, {currentLocation.lon.toFixed(3)}°E &middot; Drainage Area: {currentLocation.terrain.upstream_area_km2 || 47.7} km²
+                    <strong>Coordinates:</strong> {currentLocation.lat.toFixed(3)}°N, {currentLocation.lon.toFixed(3)}°E &middot; Drainage Area: {Math.round(currentLocation.terrain.upstream_area_km2 || 48)} km²
                   </div>
                 </div>
               </div>
@@ -2766,7 +2963,7 @@ function App() {
                   </div>
                   <div className="flex justify-between">
                     <span>Priority Tier for Intervention:</span>
-                    <strong className="text-[#174A7E] font-bold">Priority P{currentLocation.rank} (Score: {currentLocation.priority.toFixed(2)})</strong>
+                    <strong className="text-[#174A7E] font-bold">Priority P{currentLocation.rank}</strong>
                   </div>
                   <div className="flex justify-between">
                     <span>Data Adequacy & Telemetry Confidence:</span>
@@ -2787,15 +2984,15 @@ function App() {
                 <div className="pl-6 text-[11px] text-slate-700 space-y-1.5">
                   <div className="flex justify-between items-center">
                     <span>&bull; Multi-scale Rain Burst (3h Intensity):</span>
-                    <strong className="font-mono text-slate-900">{currentLocation.features.rain_3h?.toFixed(1) || '0.0'} mm</strong>
+                    <strong className="font-mono text-slate-900">{currentLocation.features.rain_3h?.toFixed(1) || '0.0'} mm (Threshold: Model-evaluated)</strong>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>&bull; Antecedent Soil Moisture (0–7cm):</span>
-                    <strong className="font-mono text-slate-900">{((currentLocation.features.soil_moisture ?? 0.3) * 100).toFixed(0)}% saturation</strong>
+                    <strong className="font-mono text-slate-900">{((currentLocation.features.soil_moisture ?? 0.3) * 100).toFixed(0)}% saturation ({((currentLocation.features.soil_moisture ?? 0.3) > 0.6 ? '↑ elevated' : '↓ mitigating')})</strong>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>&bull; Upstream Inflow & Valley Funneling:</span>
-                    <strong className="font-mono text-slate-900">{currentLocation.terrain.upstream_area_km2 || 47.7} km² drainage basin</strong>
+                    <strong className="font-mono text-slate-900">{Math.round(currentLocation.terrain.upstream_area_km2 || 48)} km² catchment</strong>
                   </div>
                 </div>
               </div>
@@ -2811,15 +3008,15 @@ function App() {
                 </div>
                 <div className="pl-6 text-[11px] text-slate-700 space-y-1">
                   <div className="flex justify-between">
-                    <span>Inhabited Settlements & Camps:</span>
-                    <strong className="text-amber-900">{currentLocation.exposure.counts.settlement || 0} structures in buffer</strong>
+                    <span>Riverside Settlements & Camps:</span>
+                    <strong className="text-amber-900">{currentLocation.exposure.counts.settlement || 0} structures in corridor</strong>
                   </div>
                   <div className="flex justify-between">
-                    <span>Critical Bridges in Inundation Path:</span>
-                    <strong className="text-red-900">{currentLocation.exposure.counts.bridge || 0} bridges threatened</strong>
+                    <span>Critical Bridges in Corridor:</span>
+                    <strong className="text-red-900">{currentLocation.exposure.counts.bridge || 0} bridges</strong>
                   </div>
                   <div className="flex justify-between">
-                    <span>Arterial Road Network (NH-107):</span>
+                    <span>Arterial Highway (NH-107):</span>
                     <strong className="text-slate-900">{currentLocation.exposure.counts.road || 0} km road corridor</strong>
                   </div>
                   <div className="text-[10.5px] text-slate-500 pt-1 border-t border-slate-100">
@@ -2833,31 +3030,40 @@ function App() {
                 <div className="flex justify-between items-center">
                   <strong className="text-slate-900 text-xs flex items-center gap-1.5">
                     <span className="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold">5</span>
-                    WHAT ACTION SHOULD BE TAKEN?
+                    AUTHORITY VERIFICATION &amp; ACTION PROTOCOL
                   </strong>
-                  <span className="badge normal">DEOC ACTION PROTOCOL</span>
+                  <span className="badge normal">EOC CHECKLIST</span>
                 </div>
-                <div className="pl-6 text-[11px] space-y-1 text-slate-700">
+                <div className="pl-6 text-[11px] space-y-1.5 text-slate-700">
                   {currentLocation.alert_level === 'Critical' ? (
-                    <div className="p-2.5 bg-red-50 border border-red-200 rounded text-red-900 font-bold leading-relaxed space-y-1">
-                      <div>🚨 <strong>IMMEDIATE ACTION CODE RED:</strong></div>
-                      <div>1. Immediately sound sirens and alert local police outposts.</div>
-                      <div>2. Halt all upward pilgrim movement at Sonprayag and Gaurikund.</div>
-                      <div>3. Evacuate all settlements within 150m river corridor to higher ground (&gt;30m elevation).</div>
-                      <div>4. Dispatch SDRF & NDRF quick reaction teams to bridge approaches.</div>
+                    <div className="p-2.5 bg-red-50 border border-red-200 rounded text-red-900 leading-relaxed space-y-1.5">
+                      <div className="font-bold text-red-950">🚨 AUTHORITY VERIFICATION CHECKLIST (HIGH SEVERITY):</div>
+                      <div className="text-[11px] space-y-1">
+                        <div>☐ 1. Cross-verify latest precipitation with nearest IMD radar/AWS telemetry.</div>
+                        <div>☐ 2. Confirm river stage observations with field teams / CCTV where available.</div>
+                        <div>☐ 3. Inspect bridge abutments and road culverts on NH-107 corridor.</div>
+                        <div>☐ 4. Alert State Disaster Response Force (SDRF) &amp; local police posts.</div>
+                        <div>☐ 5. Notify downstream reach officers along the Mandakini cascade network.</div>
+                      </div>
                     </div>
                   ) : currentLocation.alert_level === 'Warning' ? (
-                    <div className="p-2.5 bg-amber-50 border border-amber-200 rounded text-amber-900 font-bold leading-relaxed space-y-1">
-                      <div>⚠️ <strong>EARLY WARNING WATCH ACTION:</strong></div>
-                      <div>1. Issue public address announcements along pilgrim paths.</div>
-                      <div>2. Inspect bridge piers for debris choking and sediment buildup.</div>
-                      <div>3. Ready concrete high-ground evacuation shelters.</div>
+                    <div className="p-2.5 bg-amber-50 border border-amber-200 rounded text-amber-900 leading-relaxed space-y-1.5">
+                      <div className="font-bold text-amber-950">⚠️ EARLY WARNING WATCH VERIFICATION:</div>
+                      <div className="text-[11px] space-y-1">
+                        <div>☐ 1. Monitor 15-minute telemetry trend for acceleration.</div>
+                        <div>☐ 2. Issue caution advisories along pilgrim paths and transit hubs.</div>
+                        <div>☐ 3. Inspect bridge piers for sediment and debris choking.</div>
+                      </div>
                     </div>
                   ) : (
                     <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded text-emerald-900 leading-relaxed">
-                      🟢 <strong>NORMAL OPERATIONAL PROTOCOL:</strong> Telemetry nominal (0.3% baseline hazard). Maintain automated sensor telemetry polling and IMD Doppler radar surveillance.
+                      🟢 <strong>NORMAL OPERATIONAL PROTOCOL:</strong> Telemetry nominal (0.3% baseline hazard). Maintain automated telemetry ingestion and IMD radar surveillance.
                     </div>
                   )}
+
+                  <div className="p-2 bg-slate-100 rounded text-[10.5px] text-slate-600 italic">
+                    Note: AAGAAH is an automated decision-support system. Final response, evacuation orders, and resource mobilization remain the sole statutory responsibility of District and State Disaster Management Authorities.
+                  </div>
                 </div>
               </div>
             </div>
