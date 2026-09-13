@@ -140,3 +140,25 @@ export interface SituationSummaryResponse {
   briefing_markdown: string
   as_of: string
 }
+
+export interface ModelCard {
+  id: string
+  training: string
+  seed: number
+  features: string[]
+  target: string
+  validation: string
+  folds: { training_rows: number; held_out_rows: number; groups_disjoint: boolean }[]
+  performance_metrics: Record<string, any> | null
+  historical_validation: boolean
+  risk_semantics: string
+  data_sha256: string
+}
+
+export interface HealthResponse {
+  status: string
+  storage: string
+  redis: string
+  model_status: string
+  scientific_readiness: boolean
+}
