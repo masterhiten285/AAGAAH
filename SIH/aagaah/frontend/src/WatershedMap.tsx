@@ -643,58 +643,8 @@ export default function WatershedMap({
 
   return (
     <div className="watershed-map-root w-full h-full relative" ref={host}>
-      {/* Top Map Toolbar: Search + Quick Geographic Presets */}
+      {/* Top Left: Dynamic Map Level Title Badge */}
       <div className="absolute top-3 left-3 z-20 flex flex-col gap-2">
-        <div className="flex items-center gap-2">
-          {/* Location Search Input */}
-          <form
-            onSubmit={handleSearch}
-            className="flex items-center bg-white/95 backdrop-blur border border-[#D5DDE4] rounded shadow-sm px-2 py-1"
-          >
-            <Search size={14} className="text-slate-400 mr-1.5" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search e.g. Kedarnath, Dehradun..."
-              className="text-xs bg-transparent border-none focus:outline-none w-44 text-slate-800 placeholder-slate-400 font-medium"
-            />
-          </form>
-
-          {/* Geographic Presets Bar */}
-          <div className="geo-presets">
-            <button
-              onClick={() => zoomTo('india')}
-              className={`geo-preset-btn ${currentPreset === 'india' ? 'active' : ''}`}
-              title="National overview (Regional geographic context only)"
-            >
-              India (Context)
-            </button>
-            <button
-              onClick={() => zoomTo('himalayas')}
-              className={`geo-preset-btn ${currentPreset === 'himalayas' ? 'active' : ''}`}
-              title="Himalayan mountain arc (Regional geographic context only)"
-            >
-              Himalayas (Context)
-            </button>
-            <button
-              onClick={() => zoomTo('uttarakhand')}
-              className={`geo-preset-btn ${currentPreset === 'uttarakhand' ? 'active' : ''}`}
-              title="Uttarakhand state basins (Regional geographic context only)"
-            >
-              Uttarakhand (Context)
-            </button>
-            <button
-              onClick={() => zoomTo('mandakini')}
-              className={`geo-preset-btn ${currentPreset === 'mandakini' || currentPreset === 'location' ? 'active' : ''}`}
-              title="Mandakini Basin — Active Predictive Model Pilot with 7 Monitored River Reaches"
-            >
-              Mandakini (Active Pilot)
-            </button>
-          </div>
-        </div>
-
-        {/* Dynamic Map Level Title Badge */}
         <div className="bg-[#17324A]/95 backdrop-blur text-white px-3.5 py-1.5 rounded-md shadow-md flex flex-col border border-[#174A7E]/50 max-w-fit">
           <div className="text-[11.5px] font-extrabold tracking-wide uppercase text-white flex items-center gap-1.5">
             <Compass size={13} className="text-sky-300" />
